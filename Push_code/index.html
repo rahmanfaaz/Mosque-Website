@@ -106,7 +106,7 @@
             border-radius: 10px;
             padding: 2rem; /* Increased padding for height */
             margin-top: 20px; /* Added margin for separation */
-            width: 100%; /* Fill the available width */
+            width: calc(100% - 40px); /* Fill the available width */
             max-width: 1000px; /* Limit the max width */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
             align-self: flex-start; /* Align to the left side */
@@ -151,8 +151,9 @@
             border-radius: 8px;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            white-space: normal;
-            overflow: hidden;
+            white-space: nowrap; /* Prevent wrapping of text */
+            overflow: hidden; /* Hide overflow */
+            text-overflow: ellipsis; /* Show ellipsis for overflowing text */
         }
         .prayer-card h2 {
             font-size: 1.2rem;

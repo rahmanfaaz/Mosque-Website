@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jamia Masjid West Drayton</title>
+    <link href="https://fonts.googleapis.com/css2?family=Verdana&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://www.shutterstock.com/shutterstock/photos/1284341710/display_1500/stock-vector-makkah-and-madina-1284341710.jpg" type="image/jpeg">
+    <style>
+        /* Top Navigation Bar */
+        .top-bar {
+            background-color: rgba(0, 0, 0, 0.8); /* Dark background matching theme */
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px; /* Increased padding for spacing */
+            width: 100%;
+            height: 70px; /* Increased height of the navigation bar */
+            box-sizing: border-box;
+        }
+        .top-bar .logo {
+            display: flex;
+            align-items: center;
+        }
+        .top-bar .logo img {
+            width: 40px;
+            margin-right: 10px;
+        }
+        .top-bar .logo h1 {
+            font-size: 1.75rem;
+            font-weight: bold;
+            margin: 0;
+            color: #FFD700; /* Gold color for the title */
+        }
+        .top-bar .nav-links {
+            display: flex;
+            gap: 20px; /* Adjusted gap for better spacing */
+            flex-wrap: wrap; /* Allows wrapping of links */
+        }
+        .top-bar .nav-links a {
+            color: #f0e68c; /* Light yellow color for links */
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+        .top-bar .nav-links a:hover {
+            color: #ffffff; /* White color on hover for contrast */
+        }
+        .top-bar .donate-btn {
+            background-color: #FFD700; /* Gold color */
+            color: rgba(0, 0, 0, 0.8);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .top-bar .donate-btn:hover {
+            background-color: #ffc107; /* Darker gold on hover */
+        }
+
+        /* Main content styling */
+        body {
+            font-family: 'Verdana', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-image: url('https://images.unsplash.com/photo-1647177156544-0d51fb7c900c?q=80&w=1859&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white; /* Default text color */
+            margin: 0; /* Ensure no default margin on body */
+            padding: 0; /* Ensure no default padding on body */
+        }
+        .container {
+            max-width: 1300px;
+            width: 90%;
+            margin: 20px auto;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            box-sizing: border-box;
+        }
+        .masjid-info {
+            text-align: center;
+            color: #FFD700; /* Gold color for the title */
+            margin-top: 20px;
+        }
+        .masjid-info h1 {
+            font-size: 2rem;
+            margin: 0;
+        }
+        .masjid-info p {
+            font-size: 1rem;
+            color: #f0e68c; /* Light yellow color for address */
+            margin-top: 5px; /* Added margin for spacing */
+        }
+        .appeal, .timetable {
+            background: rgba(255, 255, 255, 0.9);
+            color: black;
+            border-radius: 10px;
+            padding: 2rem; /* Increased padding for height */
+            margin-top: 20px; /* Added margin for separation */
+            width: 100%; /* Fill the available width */
+            max-width: 1000px; /* Limit the max width */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
+            align-self: flex-start; /* Align to the left side */
+            margin-left: 0; /* No margin on left to align with black box */
+        }
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 100%;
+            padding: 0.5rem;
+        }
+        .time-container {
+            display: flex;
+            align-items: center; /* Align items in the center */
+            font-size: 1.75rem;
+            color: #FFD700; /* Gold color for current time and next Jamaat */
+            font-weight: bold;
+        }
+        .text-lg {
+            font-size: 1.75rem;
+            color: #FFD700; /* Gold color */
+            font-weight: bold;
+            margin-right: 10px; /* Spacing between label and value */
+        }
+
+        /* Prayer Timetable Grid Styling */
+        .prayer-timetable-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr); /* Two rows, 6 columns */
+            gap: 20px;
+            margin-top: 1.5rem;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 8px;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+        .prayer-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #f0e68c;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            white-space: normal;
+            overflow: hidden;
+        }
+        .prayer-card h2 {
+            font-size: 1.2rem;
+            margin: 10px 0;
+        }
+        .prayer-card p {
+            margin: 5px 0;
+            font-size: 1rem;
+        }
+
+        /* Responsive styling */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            .prayer-timetable-grid {
+                grid-template-columns: repeat(2, 1fr); /* Adjust grid for smaller screens */
+            }
+            .time-container {
+                font-size: 1.5rem;
+            }
+            h1 {
+                font-size: 1.75rem;
+            }
+            .top-bar .nav-links {
+                gap: 15px; /* Reduce gap on smaller screens */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .text-lg {
+                font-size: 1.5rem; /* Smaller font size for small devices */
+            }
+            .masjid-info h1 {
+                font-size: 1.5rem; /* Smaller title font for mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Navigation Bar -->
+    <div class="top-bar">
+        <div class="logo">
+            <img src="https://cdn-icons-png.flaticon.com/512/869/869869.png" alt="Mosque Logo">
+            <h1>Jamia Masjid West Drayton</h1>
+        </div>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#prayer-time">Prayer Time</a>
+            <a href="#about-us">About Us</a>
+            <a href="#services">Our Services</a>
+            <a href="#education">Education</a>
+            <a href="#news">News</a>
+            <a href="#events">Events</a>
+            <a href="#donation">Donation</a>
+            <a href="#resources">Resources</a>
+            <a href="#contact-us">Contact Us</a>
+            <span style="color: #f0e68c;">| 1 Colham Mill Road, West Drayton, London, England, UB7 7AD</span> <!-- Address in navbar -->
+        </div>
+        <button class="donate-btn">DONATE NOW</button>
+    </div>
+
+    <!-- Main Content Container -->
+    <div class="container">
+        <!-- Current Time and Next Jamaat -->
+        <div class="header">
+            <div class="time-container" id="time-container">
+                <div class="text-lg">Current Date/Time:</div>
+                <div class="text-lg" id="current-time">Loading current time...</div>
+            </div>
+            <div class="text-lg" id="countdown">Loading time until next Jamaat...</div>
+        </div>
+
+        <!-- Appeal Section -->
+        <div class="appeal">
+            <h2 class="text-2xl font-bold text-center">Appeal</h2>
+            <p>Dear Brothers and Sisters, Jamia Masjid West Drayton is the only Masjid in the area which has permission from the council to operate as a Muslim Place of Worship. Currently, we are running at 130% of our capacity during Juma and other religious events. The population of West Drayton is significantly growing, and the Muslim community is increasing. To accommodate this growth and continue offering religious services, we urgently need to expand our premises. The overall expansion project will cost approximately GBP 750k. We currently have about £10k in Karz e Hasna to repay and around £16k in funds in the bank.</p>
+            <p><strong>Donate:</strong> Lloyds Bank Account No. 23462060 Sort Code: 30-99-08</p>
+        </div>
+
+        <!-- Prayer Timetable Section -->
+        <div class="timetable">
+            <h2 class="text-2xl font-bold">Prayer Timetable</h2>
+            <div class="prayer-timetable-grid">
+                <!-- First row -->
+                <div class="prayer-card"><h2>Fajr</h2><p>Azan: 6:00 AM</p><p>Jamaat: 6:30 AM</p></div>
+                <div class="prayer-card"><h2>Zuhr</h2><p>Azan: 1:00 PM</p><p>Jamaat: 1:30 PM</p></div>
+                <div class="prayer-card"><h2>Asr</h2><p>Azan: 4:00 PM</p><p>Jamaat: 4:15 PM</p></div>
+                <div class="prayer-card"><h2>Maghrib</h2><p>Azan: 5:45 PM</p><p>Jamaat: 5:48 PM (+3 mins)</p></div>
+                <div class="prayer-card"><h2>Isha</h2><p>Azan: 7:45 PM</p><p>Jamaat: 8:00 PM</p></div>
+                <div class="prayer-card"><h2>Tahajjud</h2><p>Starts: 8:33 PM</p><p>Ends: 6:02 AM</p></div>
+                <!-- Second row -->
+                <div class="prayer-card"><h2>Sunrise</h2><p>7:45 AM</p></div>
+                <div class="prayer-card"><h2>Sunset</h2><p>5:50 PM</p></div>
+                <div class="prayer-card"><h2>Sehri</h2><p>6:05 AM</p></div>
+                <div class="prayer-card"><h2>Iftari</h2><p>5:50 PM</p></div>
+                <div class="prayer-card"><h2>Jum'a 1</h2><p>Azan: 12:45 PM</p><p>Jamaat: 1:30 PM</p></div>
+                <div class="prayer-card"><h2>Jum'a 2</h2><p>Azan: 12:45 PM</p><p>Jamaat: 2:15 PM</p></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const jamaatTimes = [
+            { name: "Fajr", time: "06:30" },
+            { name: "Zohar", time: "13:30" },
+            { name: "Asar", time: "16:15" },
+            { name: "Maghrib", time: "17:48" },
+            { name: "Isha", time: "20:00" },
+            { name: "Juma'a 1", time: "13:30" },
+            { name: "Juma'a 2", time: "14:15" }
+        ];
+
+        function updateCurrentTime() {
+            const now = new Date();
+            const dateFormat = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+            document.getElementById('current-time').innerText = new Intl.DateTimeFormat('en-GB', dateFormat).format(now);
+        }
+
+        function getNextJamaatTime() {
+            const now = new Date();
+            let nextJamaatTime = null;
+
+            for (const jamaat of jamaatTimes) {
+                const [hours, minutes] = jamaat.time.split(':').map(Number);
+                const jamaatDate = new Date();
+                jamaatDate.setHours(hours, minutes, 0, 0);
+
+                if (jamaatDate > now) {
+                    nextJamaatTime = jamaatDate;
+                    break;
+                }
+            }
+
+            if (!nextJamaatTime) {
+                const [hours, minutes] = jamaatTimes[0].time.split(':').map(Number);
+                nextJamaatTime = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, hours, minutes);
+            }
+
+            const timeLeft = nextJamaatTime - now;
+            const hoursLeft = Math.floor((timeLeft / (1000 * 60 * 60)) % 24);
+            const minutesLeft = Math.floor((timeLeft / (1000 * 60)) % 60);
+            const secondsLeft = Math.floor((timeLeft / 1000) % 60);
+
+            document.getElementById('countdown').innerText = `Time until next Jamaat: ${hoursLeft}h ${minutesLeft}m ${secondsLeft}s`;
+        }
+
+        function startClock() {
+            updateCurrentTime();
+            getNextJamaatTime();
+            setInterval(() => {
+                updateCurrentTime();
+                getNextJamaatTime();
+            }, 1000);
+        }
+
+        window.onload = startClock;
+    </script>
+</body>
+</html>

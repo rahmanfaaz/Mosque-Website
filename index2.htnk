@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jamia Masjid West Drayton</title>
+    <link href="https://fonts.googleapis.com/css2?family=Verdana&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/869/869869.png" type="image/png">
+    <style>
+        body {
+            font-family: 'Verdana', sans-serif;
+            background-image: url('https://images.unsplash.com/photo-1692272202349-2ad4c8f44276?q=80&w=1890&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        .masjid-info {
+            text-align: center;
+        }
+        .appeal, .timetable {
+            background: rgba(255, 255, 255, 0.9);
+            color: black;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 0.5rem;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 0.5rem;
+        }
+        .time-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            font-size: 1.25rem;
+        }
+        .text-lg {
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="time-container">
+            <div class="text-lg" id="current-time"></div>
+            <div class="text-lg" id="clock"></div>
+            <div class="text-lg" id="countdown"></div> <!-- Moved countdown here to match the current time style -->
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="masjid-info">
+            <h1 class="text-3xl font-bold">Jamia Masjid West Drayton</h1>
+            <p class="text-lg">Address: 1 Colham Mill Road, West Drayton, London, England, UB7 7AD</p>
+        </div>
+
+        <div class="appeal">
+            <h2 class="text-2xl font-bold text-center">Appeal</h2>
+            <p>Dear Brothers and Sisters, Jamia Masjid West Drayton is the only Masjid in the area which has permission from the council to operate as a Muslim Place of Worship. Currently, we are running at 130% of our capacity during Juma and other religious events. The population of West Drayton is significantly growing, and the Muslim community is increasing. To accommodate this growth and continue offering religious services, we urgently need to expand our premises. The overall expansion project will cost approximately GBP 750k. We currently have about £10k in Karz e Hasna to repay and around £16k in funds in the bank.</p>
+            <p><strong>Donate:</strong> Lloyds Bank Account No. 23462060 Sort Code: 30-99-08</p>
+        </div>
+
+        <div class="timetable">
+            <h2 class="text-2xl font-bold">Prayer Timetable</h2>
+            <table class="mx-auto">
+                <thead>
+                    <tr>
+                        <th>Prayer</th>
+                        <th>Azan</th>
+                        <th>Jamaat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Fajr</td>
+                        <td>6:00 AM</td>
+                        <td>6:30 AM</td>
+                    </tr>
+                    <tr>
+                        <td>Zohar</td>
+                        <td>1:00 PM</td>
+                        <td>1:30 PM</td>
+                    </tr>
+                    <tr>
+                        <td>Asar</td>
+                        <td>4:00 PM</td>
+                        <td>4:15 PM</td>
+                    </tr>
+                    <tr>
+                        <td>Maghrib</td>
+                        <td>5:45 PM</td>
+                        <td>5:48 PM (+3 mins)</td>
+                    </tr>
+                    <tr>
+                        <td>Isha</td>
+                        <td>7:45 PM</td>
+                        <td>8:00 PM</td>
+                    </tr>
+                    <tr>
+                        <td>Juma'a 1</td>
+                        <td>12:45 PM</td>
+                        <td>1:30 PM</td>
+                    </tr>
+                    <tr>
+                        <td>Juma'a 2</td>
+                        <td>12:45 PM</td>
+                        <td>2:15 PM</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const jamaatTimes = [
+            { name: "Fajr", time: "06:30" },
+            { name: "Zohar", time: "13:30" },
+            { name: "Asar", time: "16:15" },
+            { name: "Maghrib", time: "17:48" },
+            { name: "Isha", time: "20:00" },
+            { name: "Juma'a 1", time: "13:30" },
+            { name: "Juma'a 2", time: "14:15" }
+        ];
+
+        function getNextJamaatTime() {
+            const now = new Date();
+            let nextJamaatTime = null;
+
+            for (const jamaat of jamaatTimes) {
+                const [hours, minutes] = jamaat.time.split(':').map(Number);
+                const jamaatDate = new Date();
+                jamaatDate.setHours(hours, minutes, 0, 0);
+
+                if (jamaatDate > now) {
+                    nextJamaatTime = { name: jamaat.name, time: jamaatDate };
+                    break;
+                }
+            }
+
+            if (!nextJamaatTime) {
+                const [hours, minutes] = jamaatTimes[0].time.split(':').map(Number);
+                nextJamaatTime = { name: "Fajr", time: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, hours, minutes) };
+            }
+
+            const timeLeft = nextJamaatTime.time - now;
+            const hoursLeft = Math.floor((timeLeft / (1000 * 60 * 60)) % 24);
+            const minutesLeft = Math.floor((timeLeft / (1000 * 60)) % 60);
+            const secondsLeft = Math.floor((timeLeft / 1000) % 60);
+
+            document.getElementById('countdown').innerText = `Next Jamaat (${nextJamaatTime.name}): ${hoursLeft}h ${minutesLeft}m ${secondsLeft}s`;
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const options = { timeZone: 'Europe/London', hour12: false, year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+            const formattedClock = new Intl.DateTimeFormat('en-GB', options).format(now);
+            document.getElementById('clock').innerText = formattedClock;
+        }
+
+        function updateCurrentTime() {
+            const now = new Date();
+            const options = { timeZone: 'Europe/London', weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('current-time').innerText = new Intl.DateTimeFormat('en-GB', options).format(now);
+        }
+
+        setInterval(() => {
+            updateClock();
+            updateCurrentTime();
+            getNextJamaatTime();
+        }, 1000);
+
+        updateClock();
+        updateCurrentTime();
+        getNextJamaatTime();
+    </script>
+</body>
+</html>

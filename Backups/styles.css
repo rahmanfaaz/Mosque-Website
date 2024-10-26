@@ -1,8 +1,0 @@
-body {
-    font-family: Verdana, sans-serif;
-    transition: background-color 0.3s, color 0.3s;
-    background-image: url('https://example.com/path-to-your-mecca-medina-image.jpg'); /* Replace with your image URL */
-    background-size: cover; /* Make the image cover the whole body */
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Prevent the image from repeating */
-}

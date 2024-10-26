@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jamia Masjid West Drayton</title>
     <link href="https://fonts.googleapis.com/css2?family=Verdana&display=swap" rel="stylesheet">
-    <link rel="icon" href="https://www.shutterstock.com/shutterstock/photos/1284341710/display_1500/stock-vector-makkah-and-madina-1284341710.jpg" type="image/jpeg">
+    <link rel="icon" href="https://www.freeiconspng.com/thumbs/quran-icon-png/quran-icon-png-7.png" type="image/png">
     <style>
         /* Top Navigation Bar */
         .top-bar {
@@ -77,7 +77,7 @@
             padding: 0; /* Ensure no default padding on body */
         }
         .container {
-            max-width: 1300px;
+            max-width: 1400px; /* Increased max-width for the black box */
             width: 90%;
             margin: 20px auto;
             padding: 2rem;
@@ -107,7 +107,7 @@
             padding: 2rem; /* Increased padding for height */
             margin-top: 20px; /* Added margin for separation */
             width: calc(100% - 40px); /* Fill the available width */
-            max-width: 1000px; /* Limit the max width */
+            max-width: 1200px; /* Limit the max width to prevent congestion */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
             align-self: flex-start; /* Align to the left side */
             margin-left: 0; /* No margin on left to align with black box */
@@ -151,9 +151,8 @@
             border-radius: 8px;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            white-space: nowrap; /* Prevent wrapping of text */
-            overflow: hidden; /* Hide overflow */
-            text-overflow: ellipsis; /* Show ellipsis for overflowing text */
+            white-space: normal; /* Allow normal wrapping */
+            overflow: hidden;
         }
         .prayer-card h2 {
             font-size: 1.2rem;
@@ -162,6 +161,44 @@
         .prayer-card p {
             margin: 5px 0;
             font-size: 1rem;
+        }
+
+        /* About Us Section */
+        .about-section {
+            background: rgba(255, 255, 255, 0.9);
+            color: black;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-top: 20px; /* Added margin for separation */
+            width: calc(100% - 40px); /* Fill the available width */
+            max-width: 1200px; /* Limit the max width */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
+        }
+        .team-member-grid {
+            display: flex; /* Flexbox for vertical layout */
+            flex-direction: column; /* Stack members vertically */
+            gap: 20px; /* Space between team member sections */
+        }
+        .team-member {
+            display: flex;
+            background: rgba(0, 0, 0, 0.2); /* Dark background for each member card */
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            align-items: center; /* Center items vertically */
+        }
+        .team-member img {
+            width: 100px; /* Fixed width for the image */
+            height: 100px; /* Fixed height for the image */
+            border-radius: 50%; /* Circular image */
+            margin-right: 15px; /* Spacing between image and text */
+        }
+        .team-member h3 {
+            margin: 5px 0; /* Spacing for member names */
+            font-weight: bold; /* Bold member names */
+        }
+        .team-member p {
+            margin: 3px 0; /* Spacing for member details */
         }
 
         /* Responsive styling */
@@ -181,6 +218,11 @@
             .top-bar .nav-links {
                 gap: 15px; /* Reduce gap on smaller screens */
             }
+            .team-member {
+                flex-direction: column; /* Stack image and text on small screens */
+                align-items: center; /* Center align items */
+                text-align: center; /* Center align text */
+            }
         }
 
         @media (max-width: 480px) {
@@ -198,12 +240,12 @@
     <!-- Top Navigation Bar -->
     <div class="top-bar">
         <div class="logo">
-            <img src="https://cdn-icons-png.flaticon.com/512/869/869869.png" alt="Mosque Logo">
+            <img src="https://www.freeiconspng.com/thumbs/quran-icon-png/quran-icon-png-7.png" alt="Quran Logo"> <!-- Quran logo added -->
             <h1>Jamia Masjid West Drayton</h1>
         </div>
         <div class="nav-links">
             <a href="#home">Home</a>
-            <a href="#prayer-time">Prayer Time</a>
+            <a href="#prayer-time">Prayer Time Table</a> <!-- Updated link text -->
             <a href="#about-us">About Us</a>
             <a href="#services">Our Services</a>
             <a href="#education">Education</a>
@@ -253,6 +295,65 @@
                 <div class="prayer-card"><h2>Iftari</h2><p>5:50 PM</p></div>
                 <div class="prayer-card"><h2>Jum'a 1</h2><p>Azan: 12:45 PM</p><p>Jamaat: 1:30 PM</p></div>
                 <div class="prayer-card"><h2>Jum'a 2</h2><p>Azan: 12:45 PM</p><p>Jamaat: 2:15 PM</p></div>
+            </div>
+        </div>
+
+        <!-- About Us Section -->
+        <div class="about-section">
+            <h2 class="text-2xl font-bold">About Us</h2>
+            <p>At Jamia Masjid West Drayton, we are a dedicated team of individuals committed to serving our community with compassion and integrity. Our aim is to provide a welcoming environment for worship and community activities, fostering a spirit of unity and support among all members.</p>
+            <p>We believe in the importance of strong leadership and community service, which is reflected in our team of active directors and dedicated members. Together, we strive to uphold the values of Islam and contribute positively to our local community.</p>
+
+            <div class="team-member-grid">
+                <div class="team-member">
+                    <img src="https://via.placeholder.com/100" alt="CHAUHDHRY, Muhammad Asif Iqbal"> <!-- Placeholder image -->
+                    <div>
+                        <h3>CHAUHDHRY, Muhammad Asif Iqbal</h3>
+                        <p><strong>Role:</strong> Active Director</p>
+                        <p><strong>Correspondence Address:</strong> 74 High Street, Yiewsley, West Drayton, England, UB7 7DS</p>
+                        <p><strong>Nationality:</strong> British</p>
+                    </div>
+                </div>
+
+                <div class="team-member">
+                    <img src="https://via.placeholder.com/100" alt="JAMIL, Hafiz Muhammad Mubasher Iqbal"> <!-- Placeholder image -->
+                    <div>
+                        <h3>JAMIL, Hafiz Muhammad Mubasher Iqbal</h3>
+                        <p><strong>Role:</strong> Active Director / Head Iman</p>
+                        <p><strong>Correspondence Address:</strong> 149 The Crescent, Slough, England, SL1 2LF</p>
+                        <p><strong>Nationality:</strong> British</p>
+                    </div>
+                </div>
+
+                <div class="team-member">
+                    <img src="https://via.placeholder.com/100" alt="Nadeem, Nadeem Mughal"> <!-- Placeholder image -->
+                    <div>
+                        <h3>Nadeem, Nadeem Mughal</h3>
+                        <p><strong>Role:</strong> Active General Secretary</p>
+                        <p><strong>Correspondence Address:</strong> 17 Station Road West Drayton, England, UB7 7BT</p>
+                        <p><strong>Nationality:</strong> British</p>
+                    </div>
+                </div>
+
+                <div class="team-member">
+                    <img src="https://via.placeholder.com/100" alt="Aleemi, Abdul Wahid"> <!-- Placeholder image -->
+                    <div>
+                        <h3>Aleemi, Abdul Wahid</h3>
+                        <p><strong>Role:</strong> Active Imam / Head Tutor</p>
+                        <p><strong>Correspondence Address:</strong> 17 Station Road West Drayton, England, UB7 7BT</p>
+                        <p><strong>Nationality:</strong> German</p>
+                    </div>
+                </div>
+
+                <div class="team-member">
+                    <img src="https://via.placeholder.com/100" alt="Faaz, Khaleelur Rahman"> <!-- Placeholder image -->
+                    <div>
+                        <h3>Faaz, Khaleelur Rahman</h3>
+                        <p><strong>Role:</strong> Active General Manager / Caretaker</p>
+                        <p><strong>Correspondence Address:</strong> 1 Colham Mill Road, West Drayton, UB7 7AD</p>
+                        <p><strong>Nationality:</strong> Indian</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

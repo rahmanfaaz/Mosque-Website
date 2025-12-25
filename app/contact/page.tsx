@@ -1,0 +1,219 @@
+'use client'
+
+import { useState } from 'react'
+import GlassHeader from '../components/GlassHeader'
+
+export default function ContactPage() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    subject: '',
+    message: ''
+  })
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    // Handle form submission
+    console.log('Form submitted:', formData)
+    alert('Thank you for your message. We will get back to you soon.')
+    setFormData({ name: '', email: '', phone: '', subject: '', message: '' })
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  return (
+    <div className="min-h-screen bg-bg-primary">
+      <GlassHeader />
+      
+      <main className="w-full">
+        {/* Hero Section */}
+        <section className="w-full bg-gradient-to-b from-bg-secondary to-bg-primary py-16 md:py-24 border-b border-border">
+          <div className="container mx-auto px-4 md:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto animate-slide-up">
+              <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-text-primary mb-6 tracking-tight">
+                <span className="text-gradient">Contact Us</span>
+              </h1>
+              <p className="text-xl md:text-2xl text-text-secondary leading-relaxed">
+                We're here to help and answer any questions you may have
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <div className="container mx-auto px-4 md:px-6 lg:px-8 py-12 md:py-16">
+          <div className="grid lg:grid-cols-2 gap-12">
+            {/* Contact Information */}
+            <div>
+              <div className="glass-card-premium rounded-2xl p-10 premium-shadow-lg hover-lift mb-6 animate-slide-up">
+                <h2 className="text-3xl font-bold text-text-primary mb-6">Get in Touch</h2>
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-lg font-semibold text-text-primary mb-2">Address</h3>
+                    <p className="text-text-secondary">
+                      Jamia Masjid West Drayton<br />
+                      West Drayton<br />
+                      London, England<br />
+                      United Kingdom
+                    </p>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold text-text-primary mb-2">Phone</h3>
+                    <p className="text-text-secondary">
+                      <a href="tel:+44" className="hover:text-primary transition-colors">
+                        +44 (0) 20 XXXX XXXX
+                      </a>
+                    </p>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold text-text-primary mb-2">Email</h3>
+                    <p className="text-text-secondary">
+                      <a href="mailto:info@jamiamasjidwestdrayton.com" className="hover:text-primary transition-colors">
+                        info@jamiamasjidwestdrayton.com
+                      </a>
+                    </p>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold text-text-primary mb-2">Office Hours</h3>
+                    <p className="text-text-secondary">
+                      Monday - Friday: 9:00 AM - 5:00 PM<br />
+                      Saturday - Sunday: 10:00 AM - 2:00 PM<br />
+                      <span className="text-sm text-text-muted">(Closed during prayer times)</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Map Placeholder */}
+              <div className="glass-card-premium rounded-2xl p-10 premium-shadow-lg hover-lift animate-slide-up">
+                <h3 className="text-xl font-semibold text-text-primary mb-4">Location</h3>
+                <div className="bg-bg-secondary rounded-lg h-64 flex items-center justify-center">
+                  <p className="text-text-secondary">Map will be embedded here</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Contact Form */}
+            <div>
+              <div className="glass-card-premium rounded-2xl p-10 premium-shadow-lg hover-lift animate-slide-up">
+                <h2 className="text-3xl font-bold text-text-primary mb-6">Send us a Message</h2>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-semibold text-text-primary mb-2">
+                      Name *
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 rounded-lg border border-border bg-bg-primary text-text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                      placeholder="Your name"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-semibold text-text-primary mb-2">
+                      Email *
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 rounded-lg border border-border bg-bg-primary text-text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                      placeholder="your.email@example.com"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="phone" className="block text-sm font-semibold text-text-primary mb-2">
+                      Phone
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 rounded-lg border border-border bg-bg-primary text-text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                      placeholder="+44 (0) 7XXX XXXXXX"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="subject" className="block text-sm font-semibold text-text-primary mb-2">
+                      Subject *
+                    </label>
+                    <select
+                      id="subject"
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 rounded-lg border border-border bg-bg-primary text-text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                    >
+                      <option value="">Select a subject</option>
+                      <option value="general">General Inquiry</option>
+                      <option value="prayer">Prayer Times</option>
+                      <option value="events">Events & Programs</option>
+                      <option value="services">Services</option>
+                      <option value="donation">Donation</option>
+                      <option value="education">Education</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label htmlFor="message" className="block text-sm font-semibold text-text-primary mb-2">
+                      Message *
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
+                      rows={6}
+                      className="w-full px-4 py-3 rounded-lg border border-border bg-bg-primary text-text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
+                      placeholder="Your message..."
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full premium-gradient text-white py-5 rounded-xl font-semibold text-lg hover:opacity-90 transition-all duration-300 premium-shadow-lg hover:shadow-xl transform hover:-translate-y-1 active:scale-95"
+                  >
+                    Send Message
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="border-t border-border bg-bg-secondary py-8 mt-12">
+        <div className="container mx-auto px-4 md:px-6 lg:px-8">
+          <p className="text-center text-text-secondary">
+            © {new Date().getFullYear()} Jamia Masjid West Drayton. All rights reserved.
+          </p>
+        </div>
+      </footer>
+    </div>
+  )
+}
+

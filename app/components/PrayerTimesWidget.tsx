@@ -414,76 +414,83 @@ export default function PrayerTimesWidget() {
   }
 
   return (
-    <div className="glass-card-premium rounded-2xl p-8 md:p-10 premium-shadow-lg hover-lift w-full animate-slide-up">
+    <div className="glass-card-premium rounded-2xl p-4 sm:p-6 md:p-10 premium-shadow-lg hover-lift w-full animate-slide-up">
       {/* Header with Date Picker */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-10 gap-6">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 md:mb-10 gap-4 md:gap-6">
         <div>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-text-primary mb-3 tracking-tight refined-spacing">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-text-primary mb-2 md:mb-3 tracking-tight refined-spacing">
             <span className="text-gradient">Prayer Times</span>
           </h2>
           {isSingleDate && prayerData.length > 0 && (
-            <p className="text-sm md:text-base text-text-secondary">{todayDate}</p>
+            <p className="text-xs sm:text-sm md:text-base text-text-secondary">{todayDate}</p>
           )}
           {!isSingleDate && prayerData.length > 0 && (
-            <p className="text-sm md:text-base text-text-secondary">
+            <p className="text-xs sm:text-sm md:text-base text-text-secondary">
               Showing {prayerData.length} day{prayerData.length !== 1 ? 's' : ''}
             </p>
           )}
         </div>
         
         {/* Date Range Picker */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 bg-bg-secondary rounded-lg p-4">
-          <div className="flex items-center gap-2">
-            <label htmlFor="start-date" className="text-sm font-medium text-text-secondary whitespace-nowrap">
-              From:
-            </label>
-            <input
-              type="date"
-              id="start-date"
-              value={startDateFull || (startDate ? formatDateForInput(startDate) : '')}
-              onChange={handleStartDateChange}
-              min={MIN_DATE}
-              max={MAX_DATE}
-              className="px-3 py-2 rounded-lg border border-border bg-bg-primary text-text-primary text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-            />
+        <div className="flex flex-col md:flex-row items-stretch md:items-center gap-3 bg-bg-secondary rounded-lg p-4 md:p-6">
+          {/* Date Inputs */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 flex-1">
+            <div className="flex items-center gap-2 flex-1">
+              <label htmlFor="start-date" className="text-sm font-medium text-text-secondary whitespace-nowrap">
+                From:
+              </label>
+              <input
+                type="date"
+                id="start-date"
+                value={startDateFull || (startDate ? formatDateForInput(startDate) : '')}
+                onChange={handleStartDateChange}
+                min={MIN_DATE}
+                max={MAX_DATE}
+                className="flex-1 px-3 py-2 rounded-lg border border-border bg-bg-primary text-text-primary text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+              />
+            </div>
+            <div className="flex items-center gap-2 flex-1">
+              <label htmlFor="end-date" className="text-sm font-medium text-text-secondary whitespace-nowrap">
+                To:
+              </label>
+              <input
+                type="date"
+                id="end-date"
+                value={endDateFull || (endDate ? formatDateForInput(endDate) : '')}
+                onChange={handleEndDateChange}
+                min={startDateFull || (startDate ? formatDateForInput(startDate) : MIN_DATE)}
+                max={MAX_DATE}
+                className="flex-1 px-3 py-2 rounded-lg border border-border bg-bg-primary text-text-primary text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+              />
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <label htmlFor="end-date" className="text-sm font-medium text-text-secondary whitespace-nowrap">
-              To:
-            </label>
-            <input
-              type="date"
-              id="end-date"
-              value={endDateFull || (endDate ? formatDateForInput(endDate) : '')}
-              onChange={handleEndDateChange}
-              min={startDateFull || (startDate ? formatDateForInput(startDate) : MIN_DATE)}
-              max={MAX_DATE}
-              className="px-3 py-2 rounded-lg border border-border bg-bg-primary text-text-primary text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-            />
-          </div>
-          <button
-            onClick={handleClearFilter}
-            className="px-4 py-2 rounded-lg bg-bg-primary border border-border text-text-primary text-sm font-medium hover:bg-bg-secondary hover:border-primary transition-all whitespace-nowrap"
-          >
-            Reset to Today
-          </button>
-          {prayerData.length > 0 && (
+          
+          {/* Buttons */}
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 md:flex-shrink-0">
             <button
-              onClick={exportToPDF}
-              className="px-4 py-2 rounded-lg bg-primary text-white text-sm font-medium hover:bg-primary/90 transition-all whitespace-nowrap flex items-center gap-2"
+              onClick={handleClearFilter}
+              className="px-4 py-2.5 rounded-lg bg-bg-primary border border-border text-text-primary text-sm font-medium hover:bg-bg-secondary hover:border-primary transition-all whitespace-nowrap text-center"
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-              Export PDF
+              Reset to Today
             </button>
-          )}
+            {prayerData.length > 0 && (
+              <button
+                onClick={exportToPDF}
+                className="px-4 py-2.5 rounded-lg bg-primary text-white text-sm font-medium hover:bg-primary/90 transition-all whitespace-nowrap flex items-center justify-center gap-2"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                Export PDF
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
       {/* Single Date View (1 Day Grid) */}
       {isSingleDate && prayerData.length > 0 && (
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 mb-6">
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-8 gap-3 sm:gap-4 mb-6">
           {/* Main Prayers */}
           {prayers.map((prayerName) => {
             const prayer = prayerData[0]
@@ -496,17 +503,17 @@ export default function PrayerTimesWidget() {
             return (
                 <div
                   key={prayerName}
-                  className="p-4 rounded-xl bg-bg-secondary hover:bg-bg-tertiary transition-all duration-300 text-center hover-lift premium-border"
+                  className="p-3 sm:p-4 rounded-xl bg-bg-secondary hover:bg-bg-tertiary transition-all duration-300 text-center hover-lift premium-border"
                 >
-                <h3 className="font-semibold text-text-primary text-base mb-2">{prayerName}</h3>
+                <h3 className="font-semibold text-text-primary text-sm sm:text-base mb-2">{prayerName}</h3>
                 <div className="mb-2">
                   <p className="text-xs text-text-secondary mb-1">Start</p>
-                  <p className="text-lg md:text-xl font-bold text-primary">{time}</p>
+                  <p className="text-base sm:text-lg md:text-xl font-bold text-primary">{time}</p>
                 </div>
                 {jamaatTime ? (
                   <div>
                     <p className="text-xs text-text-secondary mb-1">Jama'at</p>
-                    <p className="text-lg md:text-xl font-bold text-primary">{jamaatTime}</p>
+                    <p className="text-base sm:text-lg md:text-xl font-bold text-primary">{jamaatTime}</p>
                   </div>
                 ) : (
                   <div>
@@ -518,8 +525,8 @@ export default function PrayerTimesWidget() {
           })}
 
           {/* Jumu'ah Times */}
-          <div className="p-4 rounded-xl bg-bg-secondary hover:bg-bg-tertiary transition-all duration-300 text-center hover-lift premium-border">
-            <h3 className="font-semibold text-text-primary text-base mb-2">Jumu'ah</h3>
+          <div className="p-3 sm:p-4 md:p-5 rounded-xl bg-bg-secondary hover:bg-bg-tertiary transition-all duration-300 text-center hover-lift premium-border min-w-0">
+            <h3 className="font-semibold text-text-primary text-sm sm:text-base mb-2 sm:mb-3">Jumu'ah</h3>
             {(() => {
               const prayer = prayerData[0]
               const jumaTimes = [
@@ -534,7 +541,7 @@ export default function PrayerTimesWidget() {
                     {jumaTimes.map((time, index) => (
                       <div key={index} className="flex-1 min-w-[60px]">
                         <p className="text-xs text-text-secondary mb-1">J{index + 1}</p>
-                        <p className="text-lg md:text-xl font-bold text-primary">{time}</p>
+                        <p className="text-sm sm:text-base md:text-lg font-bold text-primary break-words">{time}</p>
                       </div>
                     ))}
                   </div>
@@ -545,8 +552,8 @@ export default function PrayerTimesWidget() {
           </div>
 
           {/* Tahajjud Times */}
-          <div className="p-4 rounded-xl bg-bg-secondary hover:bg-bg-tertiary transition-all duration-300 text-center hover-lift premium-border">
-            <h3 className="font-semibold text-text-primary text-base mb-2">Tahajjud</h3>
+          <div className="p-3 sm:p-4 md:p-5 rounded-xl bg-bg-secondary hover:bg-bg-tertiary transition-all duration-300 text-center hover-lift premium-border min-w-0">
+            <h3 className="font-semibold text-text-primary text-sm sm:text-base mb-2 sm:mb-3">Tahajjud</h3>
             {(() => {
               const prayer = prayerData[0]
               const tahajjudStart = prayer["Tahajjud Start"]
@@ -554,14 +561,14 @@ export default function PrayerTimesWidget() {
               
               if (tahajjudStart && tahajjudStart !== '' && tahajjudEnd && tahajjudEnd !== '') {
                 return (
-                  <div className="space-y-2">
+                  <div className="space-y-2 sm:space-y-3">
                     <div>
                       <p className="text-xs text-text-secondary mb-1">Start</p>
-                      <p className="text-lg md:text-xl font-bold text-primary">{tahajjudStart}</p>
+                      <p className="text-sm sm:text-base md:text-lg font-bold text-primary break-words">{tahajjudStart}</p>
                     </div>
                     <div>
                       <p className="text-xs text-text-secondary mb-1">End</p>
-                      <p className="text-lg md:text-xl font-bold text-primary">{tahajjudEnd}</p>
+                      <p className="text-sm sm:text-base md:text-lg font-bold text-primary break-words">{tahajjudEnd}</p>
                     </div>
                   </div>
                 )
@@ -571,16 +578,16 @@ export default function PrayerTimesWidget() {
           </div>
 
           {/* Sunrise & Sunset Combined */}
-          <div className="p-4 rounded-xl bg-bg-secondary hover:bg-bg-tertiary transition-all duration-300 text-center hover-lift premium-border">
-            <h3 className="font-semibold text-text-primary text-sm mb-2 whitespace-nowrap">Dawn & Dusk</h3>
-            <div className="space-y-2">
+          <div className="p-3 sm:p-4 md:p-5 rounded-xl bg-bg-secondary hover:bg-bg-tertiary transition-all duration-300 text-center hover-lift premium-border min-w-0">
+            <h3 className="font-semibold text-text-primary text-xs sm:text-sm mb-2 sm:mb-3 whitespace-nowrap">Dawn & Dusk</h3>
+            <div className="space-y-2 sm:space-y-3">
               <div>
                 <p className="text-xs text-text-secondary mb-1">Sunrise</p>
-                <p className="text-lg md:text-xl font-bold text-primary">{prayerData[0].Sunrise}</p>
+                <p className="text-sm sm:text-base md:text-lg font-bold text-primary break-words">{prayerData[0].Sunrise}</p>
               </div>
               <div>
                 <p className="text-xs text-text-secondary mb-1">Sunset</p>
-                <p className="text-lg md:text-xl font-bold text-primary">{prayerData[0].Sunset}</p>
+                <p className="text-sm sm:text-base md:text-lg font-bold text-primary break-words">{prayerData[0].Sunset}</p>
               </div>
             </div>
           </div>

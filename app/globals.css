@@ -17,6 +17,8 @@
   --glass-bg-scrolled: rgba(255, 255, 255, 0.95);
   --glass-border: rgba(0, 0, 0, 0.1);
   --glass-shadow: rgba(0, 0, 0, 0.1);
+  /* Canvas fallback under WebGL (matches light shader base) */
+  --shader-canvas-fallback: #0550ae;
 }
 
 [data-theme="dark"] {
@@ -34,6 +36,7 @@
   --glass-bg-scrolled: rgba(22, 27, 34, 0.98);
   --glass-border: rgba(48, 54, 61, 0.6);
   --glass-shadow: rgba(0, 0, 0, 0.6);
+  --shader-canvas-fallback: #0d1117;
 }
 
 * {
@@ -44,14 +47,14 @@
 
 html {
   scroll-behavior: smooth;
+  /* Let the WebGL layer show; solid white/dark comes from content + --shader-canvas-fallback */
+  background-color: transparent;
 }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
-  background-color: var(--bg-primary);
-  background-image: 
-    radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.015) 1px, transparent 0);
-  background-size: 20px 20px;
+  background-color: transparent;
+  background-image: none;
   color: var(--text-primary);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -62,77 +65,290 @@ body {
 }
 
 [data-theme="dark"] body {
-  background-image: 
-    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.03) 1px, transparent 0);
+  background-image: none;
 }
 
-/* Glassmorphism Utilities */
+[data-theme="dark"] .pill-nav-mark {
+  background: color-mix(in srgb, var(--color-primary) 22%, var(--bg-tertiary) 78%);
+  color: var(--color-primary);
+  --tw-ring-color: color-mix(in srgb, var(--color-primary) 45%, transparent);
+}
+
+/* Page column: theme tint over shader (lighter mix = more background visible) */
+.surface-over-shader {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  background-color: color-mix(in srgb, var(--bg-primary) 68%, transparent);
+}
+[data-theme="dark"] .surface-over-shader {
+  background-color: color-mix(in srgb, var(--bg-primary) 72%, transparent);
+}
+
+/* Light mode: fade page background into the top so the shader does not read as a dark band behind the pill */
+.nav-shader-soften {
+  display: none;
+}
+html[data-theme="light"] .nav-shader-soften {
+  display: block;
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: max(11rem, 26vh);
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    var(--bg-primary) 0%,
+    color-mix(in srgb, var(--bg-primary) 88%, transparent) 38%,
+    transparent 100%
+  );
+}
+
+/* Glassmorphism — unified posh surfaces */
 @layer utilities {
-  .glass {
-    background: var(--glass-bg);
-    backdrop-filter: blur(16px) saturate(200%);
-    -webkit-backdrop-filter: blur(16px) saturate(200%);
-    border: 1px solid var(--glass-border);
-    box-shadow: 0 8px 32px 0 var(--glass-shadow);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  .glass,
+  .glass-surface-over-bg,
+  .glass-card-premium,
+  .glass-card {
+    background: color-mix(in srgb, var(--bg-primary) 40%, transparent);
+    backdrop-filter: blur(20px) saturate(168%);
+    -webkit-backdrop-filter: blur(20px) saturate(168%);
+    border: 1px solid color-mix(in srgb, #ffffff 48%, var(--border-color) 52%);
+    box-shadow:
+      0 10px 36px color-mix(in srgb, #000 8%, transparent),
+      inset 0 1px 0 0 color-mix(in srgb, #ffffff 72%, transparent);
+    transition:
+      transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 0.25s ease;
+  }
+
+  [data-theme="dark"] .glass,
+  [data-theme="dark"] .glass-surface-over-bg,
+  [data-theme="dark"] .glass-card-premium,
+  [data-theme="dark"] .glass-card {
+    background: color-mix(in srgb, var(--bg-secondary) 38%, transparent);
+    border: 1px solid color-mix(in srgb, var(--border-color) 65%, transparent);
+    box-shadow:
+      0 10px 40px rgba(0, 0, 0, 0.45),
+      inset 0 1px 0 0 color-mix(in srgb, #ffffff 10%, transparent);
   }
 
   .glass-scrolled {
-    background: var(--glass-bg-scrolled);
-    backdrop-filter: blur(24px) saturate(200%);
-    -webkit-backdrop-filter: blur(24px) saturate(200%);
-    box-shadow: 0 12px 40px 0 var(--glass-shadow);
+    background: color-mix(in srgb, var(--bg-primary) 52%, transparent);
+    backdrop-filter: blur(24px) saturate(175%);
+    -webkit-backdrop-filter: blur(24px) saturate(175%);
+    border: 1px solid color-mix(in srgb, #ffffff 40%, var(--border-color) 60%);
+    box-shadow: 0 12px 44px color-mix(in srgb, #000 10%, transparent);
+    transition: box-shadow 0.35s ease, border-color 0.25s ease;
   }
 
-  .glass-card {
-    background: var(--glass-bg);
-    backdrop-filter: blur(12px) saturate(200%);
-    -webkit-backdrop-filter: blur(12px) saturate(200%);
-    border: 1px solid var(--glass-border);
-    box-shadow: 0 4px 24px 0 var(--glass-shadow);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  [data-theme="dark"] .glass-scrolled {
+    background: color-mix(in srgb, var(--bg-secondary) 48%, transparent);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.55);
+  }
+
+  .glass-surface-over-bg:hover {
+    border-color: color-mix(in srgb, var(--color-primary) 32%, var(--border-color) 68%);
+  }
+
+  .glass:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--color-primary) 40%, var(--border-color) 60%);
+    box-shadow:
+      0 14px 42px color-mix(in srgb, #000 10%, transparent),
+      inset 0 1px 0 0 color-mix(in srgb, #ffffff 75%, transparent);
   }
 
   .glass-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 40px 0 var(--glass-shadow);
+    transform: translateY(-3px);
     border-color: var(--color-primary);
+    box-shadow:
+      0 16px 48px color-mix(in srgb, #000 11%, transparent),
+      inset 0 1px 0 0 color-mix(in srgb, #ffffff 78%, transparent);
   }
 
-  .glass-card-premium {
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px) saturate(200%);
-    -webkit-backdrop-filter: blur(20px) saturate(200%);
-    border: 1px solid var(--glass-border);
-    box-shadow: 0 8px 32px 0 var(--glass-shadow);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  [data-theme="dark"] .glass-card-premium {
-    background: var(--glass-bg);
-    border: 1px solid var(--border-color);
+  [data-theme="dark"] .glass:hover,
+  [data-theme="dark"] .glass-card:hover {
+    box-shadow:
+      0 16px 48px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 0 color-mix(in srgb, #ffffff 12%, transparent);
   }
 
   .glass-card-premium:hover {
-    transform: translateY(-4px) scale(1.01);
-    box-shadow: 0 16px 48px 0 var(--glass-shadow);
+    transform: translateY(-5px) scale(1.008);
     border-color: var(--color-primary);
+    box-shadow:
+      0 20px 56px color-mix(in srgb, #000 12%, transparent),
+      inset 0 1px 0 0 color-mix(in srgb, #ffffff 82%, transparent);
+  }
+
+  [data-theme="dark"] .glass-card-premium:hover {
+    box-shadow:
+      0 20px 56px rgba(0, 0, 0, 0.55),
+      inset 0 1px 0 0 color-mix(in srgb, #ffffff 14%, transparent);
+  }
+
+  /* Nested panels, tiles, toolbars */
+  .glass-nested {
+    background: color-mix(in srgb, var(--bg-secondary) 36%, transparent);
+    backdrop-filter: blur(14px) saturate(150%);
+    -webkit-backdrop-filter: blur(14px) saturate(150%);
+    border: 1px solid color-mix(in srgb, var(--border-color) 58%, transparent);
+    box-shadow: inset 0 1px 0 0 color-mix(in srgb, #ffffff 58%, transparent);
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  [data-theme="dark"] .glass-nested {
+    background: color-mix(in srgb, var(--bg-tertiary) 34%, transparent);
+    border: 1px solid color-mix(in srgb, var(--border-color) 55%, transparent);
+    box-shadow: inset 0 1px 0 0 color-mix(in srgb, #ffffff 8%, transparent);
+  }
+
+  .glass-nested-interactive:hover {
+    border-color: color-mix(in srgb, var(--color-primary) 38%, var(--border-color) 62%);
+    box-shadow:
+      inset 0 1px 0 0 color-mix(in srgb, #ffffff 65%, transparent),
+      0 6px 20px color-mix(in srgb, #000 5%, transparent);
+  }
+
+  [data-theme="dark"] .glass-nested-interactive:hover {
+    border-color: color-mix(in srgb, var(--color-primary) 45%, var(--border-color) 55%);
+  }
+
+  /* Form fields */
+  .glass-input {
+    background: color-mix(in srgb, var(--bg-primary) 34%, transparent);
+    backdrop-filter: blur(10px) saturate(135%);
+    -webkit-backdrop-filter: blur(10px) saturate(135%);
+  }
+
+  [data-theme="dark"] .glass-input {
+    background: color-mix(in srgb, var(--bg-secondary) 40%, transparent);
+  }
+
+  /* Page heroes (replaces opaque gradient strips) */
+  .glass-hero {
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--bg-secondary) 48%, transparent),
+      color-mix(in srgb, var(--bg-primary) 32%, transparent)
+    );
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border-bottom: 1px solid color-mix(in srgb, var(--border-color) 52%, transparent);
+  }
+
+  [data-theme="dark"] .glass-hero {
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--bg-secondary) 42%, transparent),
+      color-mix(in srgb, var(--bg-primary) 38%, transparent)
+    );
+  }
+
+  /* Section bands (e.g. donate hero) */
+  .glass-band {
+    background: color-mix(in srgb, var(--bg-secondary) 42%, transparent);
+    backdrop-filter: blur(18px) saturate(155%);
+    -webkit-backdrop-filter: blur(18px) saturate(155%);
+    border-bottom: 1px solid color-mix(in srgb, var(--border-color) 55%, transparent);
+  }
+
+  [data-theme="dark"] .glass-band {
+    background: color-mix(in srgb, var(--bg-secondary) 36%, transparent);
+  }
+
+  /* Site footer */
+  .glass-footer {
+    background: color-mix(in srgb, var(--bg-secondary) 48%, transparent);
+    backdrop-filter: blur(22px) saturate(160%);
+    -webkit-backdrop-filter: blur(22px) saturate(160%);
+    border-top: 1px solid color-mix(in srgb, var(--border-color) 60%, transparent);
+  }
+
+  [data-theme="dark"] .glass-footer {
+    background: color-mix(in srgb, var(--bg-secondary) 42%, transparent);
+  }
+
+  /* Nav dropdown panel */
+  /* Nav mega-menus: high opacity so links stay readable over glass + page content */
+  .glass-dropdown-panel {
+    background: color-mix(in srgb, var(--bg-primary) 92%, transparent);
+    backdrop-filter: blur(16px) saturate(150%);
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+    border: 1px solid color-mix(in srgb, var(--border-color) 75%, transparent);
+    box-shadow:
+      0 20px 56px color-mix(in srgb, #000 14%, transparent),
+      inset 0 1px 0 0 color-mix(in srgb, #ffffff 80%, transparent);
+  }
+
+  [data-theme="dark"] .glass-dropdown-panel {
+    background: color-mix(in srgb, var(--bg-secondary) 88%, transparent);
+    border-color: color-mix(in srgb, var(--border-color) 85%, transparent);
+    box-shadow: 0 20px 56px rgba(0, 0, 0, 0.62);
+  }
+
+  .glass-dropdown-item:hover {
+    background: color-mix(in srgb, var(--bg-secondary) 52%, transparent);
+  }
+
+  [data-theme="dark"] .glass-dropdown-item:hover {
+    background: color-mix(in srgb, var(--bg-tertiary) 45%, transparent);
+  }
+
+  .glass-hover-subtle:hover {
+    background: color-mix(in srgb, var(--bg-secondary) 48%, transparent);
+  }
+
+  [data-theme="dark"] .glass-hover-subtle:hover {
+    background: color-mix(in srgb, var(--bg-tertiary) 42%, transparent);
+  }
+
+  /* Prayer / data tables */
+  .glass-table tbody tr:hover {
+    background: color-mix(in srgb, var(--bg-secondary) 44%, transparent);
+  }
+
+  [data-theme="dark"] .glass-table tbody tr:hover {
+    background: color-mix(in srgb, var(--bg-tertiary) 38%, transparent);
   }
 
   @media (max-width: 640px) {
-    .glass {
-      backdrop-filter: blur(10px) saturate(180%);
-      -webkit-backdrop-filter: blur(10px) saturate(180%);
-    }
-    
-    .glass-scrolled {
-      backdrop-filter: blur(14px) saturate(180%);
-      -webkit-backdrop-filter: blur(14px) saturate(180%);
-    }
-    
+    .glass,
+    .glass-surface-over-bg,
+    .glass-card-premium,
     .glass-card {
-      backdrop-filter: blur(10px) saturate(180%);
-      -webkit-backdrop-filter: blur(10px) saturate(180%);
+      backdrop-filter: blur(14px) saturate(150%);
+      -webkit-backdrop-filter: blur(14px) saturate(150%);
+    }
+
+    .glass-nested {
+      backdrop-filter: blur(12px) saturate(140%);
+      -webkit-backdrop-filter: blur(12px) saturate(140%);
+    }
+
+    .glass-dropdown-panel {
+      backdrop-filter: blur(16px) saturate(155%);
+      -webkit-backdrop-filter: blur(16px) saturate(155%);
+    }
+
+    .glass-scrolled {
+      backdrop-filter: blur(16px) saturate(160%);
+      -webkit-backdrop-filter: blur(16px) saturate(160%);
+    }
+
+    .glass-hero {
+      backdrop-filter: blur(14px) saturate(150%);
+      -webkit-backdrop-filter: blur(14px) saturate(150%);
+    }
+
+    .glass-footer,
+    .glass-band {
+      backdrop-filter: blur(14px) saturate(150%);
+      -webkit-backdrop-filter: blur(14px) saturate(150%);
     }
   }
 }

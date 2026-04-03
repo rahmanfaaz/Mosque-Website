@@ -3,6 +3,24 @@
 import { useState, useEffect } from 'react'
 import salahTimings from '@/Salah_Timings.json'
 
+/** YYYY-MM-DD as local midnight — avoids UTC bugs from `new Date(isoOnly)`. */
+function parseISODateLocal(iso: string): Date {
+  const parts = iso.split('-').map(Number)
+  const y = parts[0]
+  const m = parts[1]
+  const d = parts[2]
+  if (!y || !m || !d) return new Date(NaN)
+  return new Date(y, m - 1, d)
+}
+
+/** Local calendar date as YYYY-MM-DD (for `<input type="date">` and lookups). */
+function formatISODateLocal(d: Date): string {
+  const y = d.getFullYear()
+  const mo = String(d.getMonth() + 1).padStart(2, '0')
+  const da = String(d.getDate()).padStart(2, '0')
+  return `${y}-${mo}-${da}`
+}
+
 interface PrayerTime {
   Date: string
   Fajr: string
@@ -66,18 +84,19 @@ export default function PrayerTimesWidget() {
     return dateToNumber(date1) - dateToNumber(date2)
   }
 
-  // Generate all dates between start and end (YYYY-MM-DD format)
+  // Generate all dates between start and end (YYYY-MM-DD), using local calendar only
   const generateDateRange = (start: string, end: string): string[] => {
     const dates: string[] = []
-    const startDate = new Date(start)
-    const endDate = new Date(end)
-    
-    const currentDate = new Date(startDate)
-    while (currentDate <= endDate) {
-      dates.push(currentDate.toISOString().split('T')[0])
-      currentDate.setDate(currentDate.getDate() + 1)
+    const endD = parseISODateLocal(end)
+    if (Number.isNaN(endD.getTime())) return dates
+
+    let current = parseISODateLocal(start)
+    if (Number.isNaN(current.getTime())) return dates
+
+    while (current <= endD) {
+      dates.push(formatISODateLocal(current))
+      current = new Date(current.getFullYear(), current.getMonth(), current.getDate() + 1)
     }
-    
     return dates
   }
 
@@ -104,7 +123,7 @@ export default function PrayerTimesWidget() {
     const defaultDate = today < minDateObj ? minDateObj : (today > maxDateObj ? maxDateObj : today)
     
     const defaultFormatted = `${monthNames[defaultDate.getMonth()]}/${String(defaultDate.getDate()).padStart(2, '0')}`
-    const defaultFullDate = defaultDate.toISOString().split('T')[0]
+    const defaultFullDate = formatISODateLocal(defaultDate)
     
     const formattedDate = `${dayNames[defaultDate.getDay()]}, ${monthNames[defaultDate.getMonth()]} ${defaultDate.getDate()}, ${defaultDate.getFullYear()}`
     setTodayDate(formattedDate)
@@ -161,7 +180,7 @@ export default function PrayerTimesWidget() {
     
     // If we have full date, use it to get the correct year
     if (fullDate) {
-      const date = new Date(fullDate)
+      const date = parseISODateLocal(fullDate)
       const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
       return `${dayNames[date.getDay()]}, ${month} ${day}, ${date.getFullYear()}`
     }
@@ -224,7 +243,7 @@ export default function PrayerTimesWidget() {
     const today = new Date()
     const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     const todayFormatted = `${monthNames[today.getMonth()]}/${String(today.getDate()).padStart(2, '0')}`
-    const todayFullDate = today.toISOString().split('T')[0]
+    const todayFullDate = formatISODateLocal(today)
     setStartDate(todayFormatted)
     setEndDate(todayFormatted)
     setStartDateFull(todayFullDate)
@@ -271,7 +290,7 @@ export default function PrayerTimesWidget() {
     // Date range info
     let dateRangeText = ''
     if (isSingleDate && prayerData.length > 0) {
-      const date = new Date(startDateFull)
+      const date = parseISODateLocal(startDateFull)
       dateRangeText = date.toLocaleDateString('en-GB', { 
         weekday: 'long', 
         year: 'numeric', 
@@ -279,8 +298,8 @@ export default function PrayerTimesWidget() {
         day: 'numeric' 
       })
     } else {
-      const start = new Date(startDateFull)
-      const end = new Date(endDateFull)
+      const start = parseISODateLocal(startDateFull)
+      const end = parseISODateLocal(endDateFull)
       dateRangeText = `${start.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })} - ${end.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}`
     }
     
@@ -345,7 +364,7 @@ export default function PrayerTimesWidget() {
       const tableRows: any[] = []
       
       fullDates.forEach((fullDate) => {
-        const dateObj = new Date(fullDate)
+        const dateObj = parseISODateLocal(fullDate)
         const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
         const dateStr = `${monthNames[dateObj.getMonth()]}/${String(dateObj.getDate()).padStart(2, '0')}`
         
@@ -414,7 +433,7 @@ export default function PrayerTimesWidget() {
   }
 
   return (
-    <div className="glass-card-premium rounded-2xl p-4 sm:p-6 md:p-10 premium-shadow-lg hover-lift w-full animate-slide-up">
+    <div className="glass-card-premium rounded-2xl p-4 sm:p-6 md:p-10 w-full animate-slide-up">
       {/* Header with Date Picker */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 md:mb-10 gap-4 md:gap-6">
         <div>
@@ -432,7 +451,7 @@ export default function PrayerTimesWidget() {
         </div>
         
         {/* Date Range Picker */}
-        <div className="flex flex-col md:flex-row items-stretch md:items-center gap-3 bg-bg-secondary rounded-lg p-4 md:p-6">
+        <div className="flex flex-col md:flex-row items-stretch md:items-center gap-3 glass-nested rounded-lg p-4 md:p-6">
           {/* Date Inputs */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 flex-1">
             <div className="flex items-center gap-2 flex-1">
@@ -446,7 +465,7 @@ export default function PrayerTimesWidget() {
                 onChange={handleStartDateChange}
                 min={MIN_DATE}
                 max={MAX_DATE}
-                className="flex-1 px-3 py-2 rounded-lg border border-border bg-bg-primary text-text-primary text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                className="flex-1 px-3 py-2 rounded-lg border border-border glass-input text-text-primary text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
               />
             </div>
             <div className="flex items-center gap-2 flex-1">
@@ -460,7 +479,7 @@ export default function PrayerTimesWidget() {
                 onChange={handleEndDateChange}
                 min={startDateFull || (startDate ? formatDateForInput(startDate) : MIN_DATE)}
                 max={MAX_DATE}
-                className="flex-1 px-3 py-2 rounded-lg border border-border bg-bg-primary text-text-primary text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                className="flex-1 px-3 py-2 rounded-lg border border-border glass-input text-text-primary text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
               />
             </div>
           </div>
@@ -469,7 +488,7 @@ export default function PrayerTimesWidget() {
           <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 md:flex-shrink-0">
             <button
               onClick={handleClearFilter}
-              className="px-4 py-2.5 rounded-lg bg-bg-primary border border-border text-text-primary text-sm font-medium hover:bg-bg-secondary hover:border-primary transition-all whitespace-nowrap text-center"
+              className="px-4 py-2.5 rounded-lg glass-input border border-border text-text-primary text-sm font-medium hover:border-primary transition-all whitespace-nowrap text-center"
             >
               Reset to Today
             </button>
@@ -503,7 +522,7 @@ export default function PrayerTimesWidget() {
             return (
                 <div
                   key={prayerName}
-                  className="p-3 sm:p-4 rounded-xl bg-bg-secondary hover:bg-bg-tertiary transition-all duration-300 text-center hover-lift premium-border"
+                  className="p-3 sm:p-4 rounded-xl glass-nested glass-nested-interactive transition-all duration-300 text-center premium-border"
                 >
                 <h3 className="font-semibold text-text-primary text-sm sm:text-base mb-2">{prayerName}</h3>
                 <div className="mb-2">
@@ -525,7 +544,7 @@ export default function PrayerTimesWidget() {
           })}
 
           {/* Jumu'ah Times */}
-          <div className="p-3 sm:p-4 md:p-5 rounded-xl bg-bg-secondary hover:bg-bg-tertiary transition-all duration-300 text-center hover-lift premium-border min-w-0">
+          <div className="p-3 sm:p-4 md:p-5 rounded-xl glass-nested glass-nested-interactive transition-all duration-300 text-center premium-border min-w-0">
             <h3 className="font-semibold text-text-primary text-sm sm:text-base mb-2 sm:mb-3">Jumu'ah</h3>
             {(() => {
               const prayer = prayerData[0]
@@ -537,9 +556,9 @@ export default function PrayerTimesWidget() {
               
               if (jumaTimes.length > 0) {
                 return (
-                  <div className="flex flex-wrap justify-center gap-1">
+                  <div className="flex flex-col gap-2 sm:gap-3">
                     {jumaTimes.map((time, index) => (
-                      <div key={index} className="flex-1 min-w-[60px]">
+                      <div key={index} className="text-center">
                         <p className="text-xs text-text-secondary mb-1">J{index + 1}</p>
                         <p className="text-sm sm:text-base md:text-lg font-bold text-primary break-words">{time}</p>
                       </div>
@@ -552,7 +571,7 @@ export default function PrayerTimesWidget() {
           </div>
 
           {/* Tahajjud Times */}
-          <div className="p-3 sm:p-4 md:p-5 rounded-xl bg-bg-secondary hover:bg-bg-tertiary transition-all duration-300 text-center hover-lift premium-border min-w-0">
+          <div className="p-3 sm:p-4 md:p-5 rounded-xl glass-nested glass-nested-interactive transition-all duration-300 text-center premium-border min-w-0">
             <h3 className="font-semibold text-text-primary text-sm sm:text-base mb-2 sm:mb-3">Tahajjud</h3>
             {(() => {
               const prayer = prayerData[0]
@@ -578,7 +597,7 @@ export default function PrayerTimesWidget() {
           </div>
 
           {/* Sunrise & Sunset Combined */}
-          <div className="p-3 sm:p-4 md:p-5 rounded-xl bg-bg-secondary hover:bg-bg-tertiary transition-all duration-300 text-center hover-lift premium-border min-w-0">
+          <div className="p-3 sm:p-4 md:p-5 rounded-xl glass-nested glass-nested-interactive transition-all duration-300 text-center premium-border min-w-0">
             <h3 className="font-semibold text-text-primary text-xs sm:text-sm mb-2 sm:mb-3 whitespace-nowrap">Dawn & Dusk</h3>
             <div className="space-y-2 sm:space-y-3">
               <div>
@@ -598,8 +617,8 @@ export default function PrayerTimesWidget() {
       {!isSingleDate && prayerData.length > 0 && (
         <div className="overflow-x-auto max-h-[600px] overflow-y-auto">
           <div className="min-w-full">
-            <table className="w-full">
-              <thead className="sticky top-0 bg-bg-secondary z-10">
+            <table className="w-full glass-table">
+              <thead className="sticky top-0 z-10 glass-nested backdrop-blur-md">
                 <tr className="border-b border-border">
                   <th className="text-left py-3 px-4 text-text-secondary font-semibold text-sm">Date</th>
                   {prayers.map((prayer) => (
@@ -616,11 +635,11 @@ export default function PrayerTimesWidget() {
                   const fullDates = getFullDatesArray()
                   return prayerData.map((day, index) => {
                     const fullDate = fullDates[index]
-                    const todayDateStr = new Date().toISOString().split('T')[0]
+                    const todayDateStr = formatISODateLocal(new Date())
                     const isToday = fullDate === todayDateStr
                     
                     return (
-                      <tr key={index} className={`border-b border-border hover:bg-bg-secondary transition-colors ${isToday ? 'bg-primary/10' : ''}`}>
+                      <tr key={index} className={`border-b border-border transition-colors ${isToday ? 'bg-primary/10' : ''}`}>
                         <td className="py-3 px-4">
                           <div className="font-medium text-text-primary">{formatDateDisplay(day.Date, fullDate)}</div>
                           {isToday && <span className="text-xs text-primary font-semibold">Today</span>}

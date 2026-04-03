@@ -64,7 +64,7 @@ export default function LiveClock() {
   }
 
   return (
-    <div className="glass-card-premium rounded-xl p-5 premium-shadow hover-glow w-full">
+    <div className="glass-surface-over-bg rounded-xl p-5 hover-glow w-full transition-[box-shadow,border-color] duration-300">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         {/* Clock Display */}
         <div className="flex items-center space-x-4">
@@ -87,7 +87,7 @@ export default function LiveClock() {
             id="timezone-select"
             value={timezone}
             onChange={(e) => setTimezone(e.target.value)}
-            className="px-3 py-2 rounded-lg border border-border bg-bg-primary text-text-primary text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all hover:border-primary"
+            className="px-3 py-2 rounded-lg border border-border/80 bg-[color-mix(in_srgb,var(--bg-primary)_45%,transparent)] text-text-primary text-sm font-medium backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all hover:border-primary [html[data-theme=dark]_&]:bg-[color-mix(in_srgb,var(--bg-secondary)_50%,transparent)]"
           >
             {timezones.map((tz) => (
               <option key={tz.value} value={tz.value}>

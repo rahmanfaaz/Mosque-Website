@@ -2,6 +2,23 @@
 
 import { useState } from 'react'
 import GlassHeader from '../components/GlassHeader'
+import PoweredByStratix from '../components/PoweredByStratix'
+
+const MOSQUE_ADDRESS_LINE = '1 Colham Mill Rd, Yiewsley, West Drayton UB7 7AD'
+const MOSQUE_ADDRESS_LINES = [
+  'Jamia Masjid West Drayton',
+  '1 Colham Mill Rd',
+  'Yiewsley, West Drayton',
+  'UB7 7AD',
+  'United Kingdom'
+] as const
+const MOSQUE_PHONE_DISPLAY = '07496 346711'
+const MOSQUE_PHONE_TEL = '+447496346711'
+const GOOGLE_MAPS_QUERY = encodeURIComponent(
+  'Jamia Masjid West Drayton, 1 Colham Mill Rd, Yiewsley, West Drayton UB7 7AD'
+)
+const GOOGLE_MAPS_EMBED_SRC = `https://maps.google.com/maps?q=${GOOGLE_MAPS_QUERY}&z=16&output=embed`
+const GOOGLE_MAPS_LINK = `https://www.google.com/maps/search/?api=1&query=${GOOGLE_MAPS_QUERY}`
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -28,12 +45,13 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="min-h-screen bg-bg-primary">
+    <div className="flex min-h-screen flex-col">
       <GlassHeader />
-      
+
+      <div className="flex flex-1 flex-col surface-over-shader">
       <main className="w-full">
         {/* Hero Section */}
-        <section className="w-full bg-gradient-to-b from-bg-secondary to-bg-primary py-16 md:py-24 border-b border-border">
+        <section className="w-full glass-hero py-16 md:py-24">
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto animate-slide-up">
               <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-text-primary mb-6 tracking-tight">
@@ -50,24 +68,37 @@ export default function ContactPage() {
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Information */}
             <div>
-              <div className="glass-card-premium rounded-2xl p-10 premium-shadow-lg hover-lift mb-6 animate-slide-up">
+              <div className="glass-card-premium rounded-2xl p-10 mb-6 animate-slide-up">
                 <h2 className="text-3xl font-bold text-text-primary mb-6">Get in Touch</h2>
                 <div className="space-y-6">
                   <div>
                     <h3 className="text-lg font-semibold text-text-primary mb-2">Address</h3>
-                    <p className="text-text-secondary">
-                      Jamia Masjid West Drayton<br />
-                      West Drayton<br />
-                      London, England<br />
-                      United Kingdom
-                    </p>
+                    <address className="text-text-secondary not-italic">
+                      {MOSQUE_ADDRESS_LINES.map((line, i) => (
+                        <span key={i}>
+                          {line}
+                          {i < MOSQUE_ADDRESS_LINES.length - 1 ? <br /> : null}
+                        </span>
+                      ))}
+                    </address>
+                    <a
+                      href={GOOGLE_MAPS_LINK}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block mt-3 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+                    >
+                      Open in Google Maps
+                    </a>
                   </div>
 
                   <div>
                     <h3 className="text-lg font-semibold text-text-primary mb-2">Phone</h3>
                     <p className="text-text-secondary">
-                      <a href="tel:+44" className="hover:text-primary transition-colors">
-                        +44 (0) 20 XXXX XXXX
+                      <a
+                        href={`tel:${MOSQUE_PHONE_TEL}`}
+                        className="hover:text-primary transition-colors font-medium"
+                      >
+                        {MOSQUE_PHONE_DISPLAY}
                       </a>
                     </p>
                   </div>
@@ -92,18 +123,35 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              {/* Map Placeholder */}
-              <div className="glass-card-premium rounded-2xl p-10 premium-shadow-lg hover-lift animate-slide-up">
-                <h3 className="text-xl font-semibold text-text-primary mb-4">Location</h3>
-                <div className="bg-bg-secondary rounded-lg h-64 flex items-center justify-center">
-                  <p className="text-text-secondary">Map will be embedded here</p>
+              <div className="glass-card-premium rounded-2xl p-6 md:p-10 animate-slide-up">
+                <h3 className="text-xl font-semibold text-text-primary mb-2">Location</h3>
+                <p className="text-sm text-text-secondary mb-4">{MOSQUE_ADDRESS_LINE}</p>
+                <div className="relative w-full overflow-hidden rounded-xl glass-nested aspect-[4/3] min-h-[240px] md:min-h-[320px]">
+                  <iframe
+                    title="Jamia Masjid West Drayton on Google Maps"
+                    src={GOOGLE_MAPS_EMBED_SRC}
+                    className="absolute inset-0 h-full w-full border-0"
+                    loading="lazy"
+                    allowFullScreen
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
                 </div>
+                <p className="mt-4 text-center text-sm text-text-muted">
+                  <a
+                    href={GOOGLE_MAPS_LINK}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:text-primary/80 transition-colors font-medium"
+                  >
+                    View larger map
+                  </a>
+                </p>
               </div>
             </div>
 
             {/* Contact Form */}
             <div>
-              <div className="glass-card-premium rounded-2xl p-10 premium-shadow-lg hover-lift animate-slide-up">
+              <div className="glass-card-premium rounded-2xl p-10 animate-slide-up">
                 <h2 className="text-3xl font-bold text-text-primary mb-6">Send us a Message</h2>
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
@@ -117,7 +165,7 @@ export default function ContactPage() {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 rounded-lg border border-border bg-bg-primary text-text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 rounded-lg border border-border glass-input text-text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                       placeholder="Your name"
                     />
                   </div>
@@ -133,7 +181,7 @@ export default function ContactPage() {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 rounded-lg border border-border bg-bg-primary text-text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 rounded-lg border border-border glass-input text-text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                       placeholder="your.email@example.com"
                     />
                   </div>
@@ -148,8 +196,8 @@ export default function ContactPage() {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-lg border border-border bg-bg-primary text-text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                      placeholder="+44 (0) 7XXX XXXXXX"
+                      className="w-full px-4 py-3 rounded-lg border border-border glass-input text-text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                      placeholder="e.g. 07496 346711"
                     />
                   </div>
 
@@ -163,7 +211,7 @@ export default function ContactPage() {
                       value={formData.subject}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 rounded-lg border border-border bg-bg-primary text-text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 rounded-lg border border-border glass-input text-text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                     >
                       <option value="">Select a subject</option>
                       <option value="general">General Inquiry</option>
@@ -187,7 +235,7 @@ export default function ContactPage() {
                       onChange={handleChange}
                       required
                       rows={6}
-                      className="w-full px-4 py-3 rounded-lg border border-border bg-bg-primary text-text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
+                      className="w-full px-4 py-3 rounded-lg border border-border glass-input text-text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
                       placeholder="Your message..."
                     />
                   </div>
@@ -206,13 +254,15 @@ export default function ContactPage() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-border bg-bg-secondary py-8 mt-12">
-        <div className="container mx-auto px-4 md:px-6 lg:px-8">
+      <footer className="glass-footer py-8 mt-12">
+        <div className="container mx-auto flex flex-col gap-3 px-4 md:px-6 lg:px-8">
           <p className="text-center text-text-secondary">
             © {new Date().getFullYear()} Jamia Masjid West Drayton. All rights reserved.
           </p>
+          <PoweredByStratix />
         </div>
       </footer>
+      </div>
     </div>
   )
 }

@@ -1,6 +1,7 @@
-export default function Logo() {
+export default function Logo({ variant = 'default' }: { variant?: 'default' | 'header' }) {
+  const header = variant === 'header'
   return (
-    <div className="flex items-center space-x-3">
+    <div className={`flex items-center space-x-3 ${header ? 'logo-on-shader' : ''}`}>
       {/* Mosque Icon/Logo */}
       <div className="relative flex-shrink-0">
         <svg
@@ -9,7 +10,7 @@ export default function Logo() {
           viewBox="0 0 40 40"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="text-primary"
+          className={header ? 'logo-mark' : 'text-primary'}
         >
           {/* Crescent Moon */}
           <path
@@ -26,10 +27,14 @@ export default function Logo() {
       
       {/* Text */}
       <div className="flex flex-col">
-        <span className="text-lg md:text-xl font-bold text-text-primary leading-tight">
+        <span
+          className={`logo-title text-lg md:text-xl font-bold leading-tight ${header ? '' : 'text-text-primary'}`}
+        >
           Jamia Masjid
         </span>
-        <span className="text-xs md:text-sm text-text-secondary leading-tight">
+        <span
+          className={`logo-subtitle text-xs md:text-sm leading-tight ${header ? '' : 'text-text-secondary'}`}
+        >
           West Drayton
         </span>
       </div>

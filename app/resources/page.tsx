@@ -1,4 +1,5 @@
 import GlassHeader from '../components/GlassHeader'
+import PoweredByStratix from '../components/PoweredByStratix'
 import Link from 'next/link'
 
 export default function ResourcesPage() {
@@ -6,12 +7,13 @@ export default function ResourcesPage() {
   const hijriYear = currentYear - 622 // Approximate conversion
 
   return (
-    <div className="min-h-screen bg-bg-primary">
+    <div className="flex min-h-screen flex-col">
       <GlassHeader />
-      
+
+      <div className="flex flex-1 flex-col surface-over-shader">
       <main className="w-full">
         {/* Hero Section */}
-        <section className="w-full bg-gradient-to-b from-bg-secondary to-bg-primary py-16 md:py-24 border-b border-border">
+        <section className="w-full glass-hero py-16 md:py-24">
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto animate-slide-up">
               <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-text-primary mb-6 tracking-tight">
@@ -27,14 +29,14 @@ export default function ResourcesPage() {
         <div className="container mx-auto px-4 md:px-6 lg:px-8 py-12 md:py-16">
           {/* Islamic Calendar */}
           <section id="calendar" className="mb-16">
-            <div className="glass-card rounded-xl p-8 shadow-lg">
+            <div className="glass-card rounded-xl p-8">
               <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-6">Islamic Calendar (Hijri)</h2>
               <div className="prose prose-lg max-w-none text-text-secondary space-y-4">
                 <p>
                   The Islamic calendar, also known as the Hijri calendar, is a lunar calendar consisting of 12 months 
                   in a year of 354 or 355 days. It is used to determine the proper days of Islamic holidays and rituals.
                 </p>
-                <div className="bg-bg-secondary rounded-lg p-6 mt-6">
+                <div className="glass-nested rounded-lg p-6 mt-6">
                   <h3 className="text-xl font-semibold text-text-primary mb-4">Current Islamic Year</h3>
                   <p className="text-2xl font-bold text-primary mb-4">
                     {hijriYear} AH (After Hijrah)
@@ -136,10 +138,10 @@ export default function ResourcesPage() {
 
           {/* Quran & Hadith */}
           <section id="quran" className="mb-16">
-            <div className="glass-card rounded-xl p-8 shadow-lg">
+            <div className="glass-card rounded-xl p-8">
               <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-6">Quran & Hadith Resources</h2>
               <div className="grid md:grid-cols-2 gap-6">
-                <div className="bg-bg-secondary rounded-lg p-6">
+                <div className="glass-nested rounded-lg p-6">
                   <h3 className="text-xl font-semibold text-text-primary mb-4">Online Quran Resources</h3>
                   <ul className="space-y-2 text-sm text-text-secondary">
                     <li>• Quran.com - Complete Quran with translations</li>
@@ -150,7 +152,7 @@ export default function ResourcesPage() {
                   </ul>
                 </div>
 
-                <div className="bg-bg-secondary rounded-lg p-6">
+                <div className="glass-nested rounded-lg p-6">
                   <h3 className="text-xl font-semibold text-text-primary mb-4">Hadith Collections</h3>
                   <ul className="space-y-2 text-sm text-text-secondary">
                     <li>• Sahih al-Bukhari - Authentic Hadith collection</li>
@@ -161,7 +163,7 @@ export default function ResourcesPage() {
                   </ul>
                 </div>
 
-                <div className="bg-bg-secondary rounded-lg p-6">
+                <div className="glass-nested rounded-lg p-6">
                   <h3 className="text-xl font-semibold text-text-primary mb-4">Tafsir (Quranic Exegesis)</h3>
                   <ul className="space-y-2 text-sm text-text-secondary">
                     <li>• Tafsir Ibn Kathir - Classical comprehensive tafsir</li>
@@ -171,7 +173,7 @@ export default function ResourcesPage() {
                   </ul>
                 </div>
 
-                <div className="bg-bg-secondary rounded-lg p-6">
+                <div className="glass-nested rounded-lg p-6">
                   <h3 className="text-xl font-semibold text-text-primary mb-4">Islamic Learning Platforms</h3>
                   <ul className="space-y-2 text-sm text-text-secondary">
                     <li>• SeekersGuidance - Free Islamic courses</li>
@@ -186,10 +188,10 @@ export default function ResourcesPage() {
 
           {/* Downloads */}
           <section id="downloads" className="mb-16">
-            <div className="glass-card rounded-xl p-8 shadow-lg">
+            <div className="glass-card rounded-xl p-8">
               <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-6">Downloads & Educational Materials</h2>
               <div className="grid md:grid-cols-3 gap-6">
-                <div className="bg-bg-secondary rounded-lg p-6">
+                <div className="glass-nested rounded-lg p-6">
                   <h3 className="text-xl font-semibold text-text-primary mb-4">Prayer Times</h3>
                   <p className="text-sm text-text-secondary mb-4">
                     Download prayer times calendars and schedules for the year.
@@ -202,7 +204,7 @@ export default function ResourcesPage() {
                   </Link>
                 </div>
 
-                <div className="bg-bg-secondary rounded-lg p-6">
+                <div className="glass-nested rounded-lg p-6">
                   <h3 className="text-xl font-semibold text-text-primary mb-4">Islamic Calendar</h3>
                   <p className="text-sm text-text-secondary mb-4">
                     Download printable Islamic calendar with important dates and observances.
@@ -212,7 +214,7 @@ export default function ResourcesPage() {
                   </button>
                 </div>
 
-                <div className="bg-bg-secondary rounded-lg p-6">
+                <div className="glass-nested rounded-lg p-6">
                   <h3 className="text-xl font-semibold text-text-primary mb-4">Educational Guides</h3>
                   <p className="text-sm text-text-secondary mb-4">
                     Access guides on Islamic practices, fiqh, and daily Islamic living.
@@ -222,7 +224,7 @@ export default function ResourcesPage() {
                   </button>
                 </div>
 
-                <div className="bg-bg-secondary rounded-lg p-6">
+                <div className="glass-nested rounded-lg p-6">
                   <h3 className="text-xl font-semibold text-text-primary mb-4">Quran Recitation</h3>
                   <p className="text-sm text-text-secondary mb-4">
                     Download audio files of Quran recitation by renowned Qaris.
@@ -232,7 +234,7 @@ export default function ResourcesPage() {
                   </button>
                 </div>
 
-                <div className="bg-bg-secondary rounded-lg p-6">
+                <div className="glass-nested rounded-lg p-6">
                   <h3 className="text-xl font-semibold text-text-primary mb-4">Sermons & Lectures</h3>
                   <p className="text-sm text-text-secondary mb-4">
                     Download or stream Friday sermons and educational lectures.
@@ -242,7 +244,7 @@ export default function ResourcesPage() {
                   </button>
                 </div>
 
-                <div className="bg-bg-secondary rounded-lg p-6">
+                <div className="glass-nested rounded-lg p-6">
                   <h3 className="text-xl font-semibold text-text-primary mb-4">Children's Resources</h3>
                   <p className="text-sm text-text-secondary mb-4">
                     Educational materials, worksheets, and activities for children.
@@ -258,13 +260,15 @@ export default function ResourcesPage() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-border bg-bg-secondary py-8 mt-12">
-        <div className="container mx-auto px-4 md:px-6 lg:px-8">
+      <footer className="glass-footer py-8 mt-12">
+        <div className="container mx-auto flex flex-col gap-3 px-4 md:px-6 lg:px-8">
           <p className="text-center text-text-secondary">
             © {new Date().getFullYear()} Jamia Masjid West Drayton. All rights reserved.
           </p>
+          <PoweredByStratix />
         </div>
       </footer>
+      </div>
     </div>
   )
 }

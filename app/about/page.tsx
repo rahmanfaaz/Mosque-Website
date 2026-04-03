@@ -1,14 +1,16 @@
 import GlassHeader from '../components/GlassHeader'
+import PoweredByStratix from '../components/PoweredByStratix'
 import Link from 'next/link'
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-bg-primary">
+    <div className="flex min-h-screen flex-col">
       <GlassHeader />
-      
+
+      <div className="flex flex-1 flex-col surface-over-shader">
       <main className="w-full">
         {/* Hero Section */}
-        <section className="w-full bg-gradient-to-b from-bg-secondary to-bg-primary py-16 md:py-24 border-b border-border">
+        <section className="w-full glass-hero py-16 md:py-24">
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto animate-slide-up">
               <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-text-primary mb-6 tracking-tight">
@@ -24,7 +26,7 @@ export default function AboutPage() {
         <div className="container mx-auto px-4 md:px-6 lg:px-8 py-12 md:py-16">
           {/* History Section */}
           <section id="history" className="mb-20">
-            <div className="glass-card-premium rounded-2xl p-10 md:p-12 premium-shadow-lg hover-lift animate-slide-up">
+            <div className="glass-card-premium rounded-2xl p-10 md:p-12 animate-slide-up">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-text-primary mb-8 tracking-tight">
                 <span className="text-gradient">Our History</span>
               </h2>
@@ -52,7 +54,7 @@ export default function AboutPage() {
           {/* Mission & Vision Section */}
           <section id="mission" className="mb-16">
             <div className="grid md:grid-cols-2 gap-6">
-              <div className="glass-card rounded-xl p-8 shadow-lg">
+              <div className="glass-card rounded-xl p-8">
                 <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-6">Our Mission</h2>
                 <div className="space-y-4 text-text-secondary">
                   <p>
@@ -71,7 +73,7 @@ export default function AboutPage() {
                 </div>
               </div>
 
-              <div className="glass-card rounded-xl p-8 shadow-lg">
+              <div className="glass-card rounded-xl p-8">
                 <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-6">Our Vision</h2>
                 <div className="space-y-4 text-text-secondary">
                   <p>
@@ -93,7 +95,7 @@ export default function AboutPage() {
 
           {/* Leadership Section */}
           <section id="leadership" className="mb-16">
-            <div className="glass-card rounded-xl p-8 shadow-lg">
+            <div className="glass-card rounded-xl p-8">
               <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-8">Our Leadership</h2>
               <p className="text-text-secondary mb-8 text-lg">
                 Meet the dedicated individuals who guide and serve our community with wisdom, compassion, and commitment.
@@ -101,7 +103,7 @@ export default function AboutPage() {
               
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {/* Director 1 */}
-                <div className="bg-bg-secondary rounded-lg p-6 border border-border">
+                <div className="glass-nested rounded-lg p-6">
                   <h3 className="text-xl font-bold text-text-primary mb-2">Muhammad Asif Iqbal Chauhdhry</h3>
                   <p className="text-primary font-semibold mb-3">Active Director</p>
                   <div className="space-y-2 text-sm text-text-secondary">
@@ -111,7 +113,7 @@ export default function AboutPage() {
                 </div>
 
                 {/* Director 2 / Head Imam */}
-                <div className="bg-bg-secondary rounded-lg p-6 border border-border">
+                <div className="glass-nested rounded-lg p-6">
                   <h3 className="text-xl font-bold text-text-primary mb-2">Hafiz Muhammad Mubasher Iqbal Jamil</h3>
                   <p className="text-primary font-semibold mb-3">Active Director / Head Imam</p>
                   <div className="space-y-2 text-sm text-text-secondary">
@@ -121,7 +123,7 @@ export default function AboutPage() {
                 </div>
 
                 {/* General Secretary */}
-                <div className="bg-bg-secondary rounded-lg p-6 border border-border">
+                <div className="glass-nested rounded-lg p-6">
                   <h3 className="text-xl font-bold text-text-primary mb-2">Nadeem Mughal</h3>
                   <p className="text-primary font-semibold mb-3">Active General Secretary</p>
                   <div className="space-y-2 text-sm text-text-secondary">
@@ -131,7 +133,7 @@ export default function AboutPage() {
                 </div>
 
                 {/* Imam / Head Tutor */}
-                <div className="bg-bg-secondary rounded-lg p-6 border border-border">
+                <div className="glass-nested rounded-lg p-6">
                   <h3 className="text-xl font-bold text-text-primary mb-2">Abdul Wahid Aleemi</h3>
                   <p className="text-primary font-semibold mb-3">Active Imam / Head Tutor</p>
                   <div className="space-y-2 text-sm text-text-secondary">
@@ -141,7 +143,7 @@ export default function AboutPage() {
                 </div>
 
                 {/* General Manager */}
-                <div className="bg-bg-secondary rounded-lg p-6 border border-border">
+                <div className="glass-nested rounded-lg p-6">
                   <h3 className="text-xl font-bold text-text-primary mb-2">Khaleelur Rahman Faaz</h3>
                   <p className="text-primary font-semibold mb-3">Active General Manager</p>
                   <div className="space-y-2 text-sm text-text-secondary">
@@ -155,7 +157,7 @@ export default function AboutPage() {
 
           {/* Facilities Section */}
           <section id="facilities" className="mb-16">
-            <div className="glass-card rounded-xl p-8 shadow-lg">
+            <div className="glass-card rounded-xl p-8">
               <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-6">Our Facilities</h2>
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-4">
@@ -248,13 +250,15 @@ export default function AboutPage() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-border bg-bg-secondary py-8 mt-12">
-        <div className="container mx-auto px-4 md:px-6 lg:px-8">
+      <footer className="glass-footer py-8 mt-12">
+        <div className="container mx-auto flex flex-col gap-3 px-4 md:px-6 lg:px-8">
           <p className="text-center text-text-secondary">
             © {new Date().getFullYear()} Jamia Masjid West Drayton. All rights reserved.
           </p>
+          <PoweredByStratix />
         </div>
       </footer>
+      </div>
     </div>
   )
 }

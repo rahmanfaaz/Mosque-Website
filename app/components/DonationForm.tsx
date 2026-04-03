@@ -53,7 +53,7 @@ export default function DonationForm() {
   }
 
   return (
-    <div className="glass-card-premium rounded-2xl p-8 md:p-10 premium-shadow-lg hover-lift">
+    <div className="glass-card-premium rounded-2xl p-8 md:p-10 ">
       <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-text-primary mb-4 tracking-tight">
         <span className="text-gradient">Support Our Mosque</span>
       </h2>
@@ -71,7 +71,7 @@ export default function DonationForm() {
             id="donation-type"
             value={donationType}
             onChange={(e) => setDonationType(e.target.value)}
-            className="w-full px-4 py-3 rounded-lg border border-border bg-bg-primary text-text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+            className="w-full px-4 py-3 rounded-lg border border-border glass-input text-text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
             required
           >
             {donationTypes.map((type) => (
@@ -98,7 +98,7 @@ export default function DonationForm() {
                 className={`px-4 py-2 rounded-lg border transition-all ${
                   amount === preset.toString()
                     ? 'bg-primary text-white border-primary'
-                    : 'bg-bg-secondary text-text-primary border-border hover:border-primary'
+                    : 'glass-nested text-text-primary border-border hover:border-primary'
                 }`}
               >
                 £{preset}
@@ -115,7 +115,7 @@ export default function DonationForm() {
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             placeholder="Enter custom amount"
-            className="w-full px-4 py-3 rounded-lg border border-border bg-bg-primary text-text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+            className="w-full px-4 py-3 rounded-lg border border-border glass-input text-text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
             required
           />
         </div>
@@ -146,7 +146,7 @@ export default function DonationForm() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Your name"
-              className="w-full px-4 py-3 rounded-lg border border-border bg-bg-primary text-text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+              className="w-full px-4 py-3 rounded-lg border border-border glass-input text-text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
             />
           </div>
 
@@ -160,7 +160,7 @@ export default function DonationForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="your.email@example.com"
-              className="w-full px-4 py-3 rounded-lg border border-border bg-bg-primary text-text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+              className="w-full px-4 py-3 rounded-lg border border-border glass-input text-text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
             />
           </div>
         </div>
@@ -176,7 +176,7 @@ export default function DonationForm() {
             onChange={(e) => setMessage(e.target.value)}
             placeholder="Any special instructions or notes..."
             rows={4}
-            className="w-full px-4 py-3 rounded-lg border border-border bg-bg-primary text-text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
+            className="w-full px-4 py-3 rounded-lg border border-border glass-input text-text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
           />
         </div>
 

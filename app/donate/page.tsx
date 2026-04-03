@@ -1,13 +1,16 @@
 import GlassHeader from '../components/GlassHeader'
 import DonationForm from '../components/DonationForm'
+import PoweredByStratix from '../components/PoweredByStratix'
 
 export default function DonatePage() {
   return (
-    <div className="min-h-screen bg-bg-primary">
+    <div className="flex min-h-screen flex-col">
       <GlassHeader />
+
+      <div className="flex flex-1 flex-col surface-over-shader">
       <main className="w-full">
         {/* Hero Section - Full Width */}
-        <section className="w-full bg-bg-secondary py-12 md:py-16 border-b border-border">
+        <section className="w-full glass-band py-12 md:py-16">
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-text-primary mb-4">
@@ -26,7 +29,7 @@ export default function DonatePage() {
             <DonationForm />
 
             {/* Charity Registration */}
-            <div className="mt-8 glass-card-premium rounded-2xl p-8 premium-shadow-lg hover-lift border-l-4 border-primary">
+            <div className="mt-8 glass-card-premium rounded-2xl p-8 border-l-4 border-primary">
               <div className="flex items-start gap-4">
                 <div className="flex-shrink-0">
                   <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -60,25 +63,25 @@ export default function DonatePage() {
             </div>
 
             {/* Bank Transfer Option */}
-            <div className="mt-8 glass-card-premium rounded-2xl p-8 premium-shadow-lg hover-lift">
+            <div className="mt-8 glass-card-premium rounded-2xl p-8">
               <h3 className="text-xl font-bold text-text-primary mb-4">Bank Transfer</h3>
               <p className="text-text-secondary mb-6">
                 You can also make a direct bank transfer. Please include your name and donation type in the reference.
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                <div className="flex justify-between items-center p-4 bg-bg-secondary rounded-lg">
+                <div className="flex justify-between items-center p-4 glass-nested rounded-lg">
                   <span className="text-text-secondary">Account Holder:</span>
                   <span className="font-semibold text-text-primary">Jamia Masjid West Drayton Trust</span>
                 </div>
-                <div className="flex justify-between items-center p-4 bg-bg-secondary rounded-lg">
+                <div className="flex justify-between items-center p-4 glass-nested rounded-lg">
                   <span className="text-text-secondary">Account Number:</span>
                   <span className="font-semibold text-text-primary">58734823</span>
                 </div>
-                <div className="flex justify-between items-center p-4 bg-bg-secondary rounded-lg">
+                <div className="flex justify-between items-center p-4 glass-nested rounded-lg">
                   <span className="text-text-secondary">Sort Code:</span>
                   <span className="font-semibold text-text-primary">04-14-50</span>
                 </div>
-                <div className="flex justify-between items-center p-4 bg-bg-secondary rounded-lg">
+                <div className="flex justify-between items-center p-4 glass-nested rounded-lg">
                   <span className="text-text-secondary">Financial Institution:</span>
                   <span className="font-semibold text-text-primary">SumUp Payments Limited</span>
                 </div>
@@ -89,7 +92,7 @@ export default function DonatePage() {
       </main>
       
       {/* Footer */}
-      <footer className="border-t border-border bg-bg-secondary py-8 mt-12">
+      <footer className="glass-footer py-8 mt-12">
         <div className="container mx-auto px-4 md:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-center md:text-left text-text-secondary">
@@ -107,8 +110,10 @@ export default function DonatePage() {
               </a>
             </div>
           </div>
+          <PoweredByStratix className="mt-4" />
         </div>
       </footer>
+      </div>
     </div>
   )
 }

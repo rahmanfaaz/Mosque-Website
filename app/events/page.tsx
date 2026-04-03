@@ -1,4 +1,5 @@
 import GlassHeader from '../components/GlassHeader'
+import PoweredByStratix from '../components/PoweredByStratix'
 
 export default function EventsPage() {
   const upcomingEvents = [
@@ -47,12 +48,13 @@ export default function EventsPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-bg-primary">
+    <div className="flex min-h-screen flex-col">
       <GlassHeader />
-      
+
+      <div className="flex flex-1 flex-col surface-over-shader">
       <main className="w-full">
         {/* Hero Section */}
-        <section className="w-full bg-gradient-to-b from-bg-secondary to-bg-primary py-16 md:py-24 border-b border-border">
+        <section className="w-full glass-hero py-16 md:py-24">
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto animate-slide-up">
               <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-text-primary mb-6 tracking-tight">
@@ -71,7 +73,7 @@ export default function EventsPage() {
             <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-8">Upcoming Events</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {upcomingEvents.map((event, index) => (
-                <div key={index} className="glass-card-premium rounded-2xl p-8 premium-shadow-lg hover-lift animate-slide-up" style={{ animationDelay: `${index * 0.1}s` }}>
+                <div key={index} className="glass-card-premium rounded-2xl p-8 animate-slide-up" style={{ animationDelay: `${index * 0.1}s` }}>
                   <div className="flex items-start justify-between mb-4">
                     <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
                       event.type === 'Weekly' ? 'bg-primary/20 text-primary' :
@@ -105,7 +107,7 @@ export default function EventsPage() {
 
           {/* Weekly Programs */}
           <section id="weekly" className="mb-16">
-            <div className="glass-card rounded-xl p-8 shadow-lg">
+            <div className="glass-card rounded-xl p-8">
               <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-6">Weekly Programs</h2>
               <div className="space-y-6">
                 <div className="border-l-4 border-primary pl-6">
@@ -146,14 +148,14 @@ export default function EventsPage() {
 
           {/* Ramadan Schedule */}
           <section id="ramadan" className="mb-16">
-            <div className="glass-card rounded-xl p-8 shadow-lg">
+            <div className="glass-card rounded-xl p-8">
               <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-6">Ramadan Schedule</h2>
               <div className="prose prose-lg max-w-none text-text-secondary space-y-4">
                 <p>
                   During the blessed month of Ramadan, we offer a comprehensive schedule of spiritual activities, 
                   educational programmes, and community gatherings to help you make the most of this sacred time.
                 </p>
-                <div className="bg-bg-secondary rounded-lg p-6 mt-6">
+                <div className="glass-nested rounded-lg p-6 mt-6">
                   <h3 className="text-xl font-semibold text-text-primary mb-4">Daily Activities:</h3>
                   <ul className="space-y-3">
                     <li className="flex items-start">
@@ -188,10 +190,10 @@ export default function EventsPage() {
 
           {/* Educational Events */}
           <section id="education" className="mb-16">
-            <div className="glass-card rounded-xl p-8 shadow-lg">
+            <div className="glass-card rounded-xl p-8">
               <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-6">Educational Events</h2>
               <div className="grid md:grid-cols-2 gap-6">
-                <div className="bg-bg-secondary rounded-lg p-6">
+                <div className="glass-nested rounded-lg p-6">
                   <h3 className="text-xl font-semibold text-text-primary mb-4">Monthly Lecture Series</h3>
                   <p className="text-text-secondary mb-4">
                     Featuring renowned Islamic scholars and speakers addressing contemporary issues, 
@@ -202,7 +204,7 @@ export default function EventsPage() {
                   </p>
                 </div>
 
-                <div className="bg-bg-secondary rounded-lg p-6">
+                <div className="glass-nested rounded-lg p-6">
                   <h3 className="text-xl font-semibold text-text-primary mb-4">Workshops & Seminars</h3>
                   <p className="text-text-secondary mb-4">
                     Interactive workshops on various topics including family life, youth development, 
@@ -213,7 +215,7 @@ export default function EventsPage() {
                   </p>
                 </div>
 
-                <div className="bg-bg-secondary rounded-lg p-6">
+                <div className="glass-nested rounded-lg p-6">
                   <h3 className="text-xl font-semibold text-text-primary mb-4">Youth Programs</h3>
                   <p className="text-text-secondary mb-4">
                     Special events and activities designed for young Muslims, including sports, 
@@ -224,7 +226,7 @@ export default function EventsPage() {
                   </p>
                 </div>
 
-                <div className="bg-bg-secondary rounded-lg p-6">
+                <div className="glass-nested rounded-lg p-6">
                   <h3 className="text-xl font-semibold text-text-primary mb-4">Sisters' Events</h3>
                   <p className="text-text-secondary mb-4">
                     Exclusive programmes for sisters including Halaqas (study circles), social gatherings, 
@@ -241,13 +243,15 @@ export default function EventsPage() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-border bg-bg-secondary py-8 mt-12">
-        <div className="container mx-auto px-4 md:px-6 lg:px-8">
+      <footer className="glass-footer py-8 mt-12">
+        <div className="container mx-auto flex flex-col gap-3 px-4 md:px-6 lg:px-8">
           <p className="text-center text-text-secondary">
             © {new Date().getFullYear()} Jamia Masjid West Drayton. All rights reserved.
           </p>
+          <PoweredByStratix />
         </div>
       </footer>
+      </div>
     </div>
   )
 }

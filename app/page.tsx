@@ -1,16 +1,18 @@
 import GlassHeader from './components/GlassHeader'
 import HeaderBanner from './components/HeaderBanner'
+import PoweredByStratix from './components/PoweredByStratix'
 import PrayerTimesWidget from './components/PrayerTimesWidget'
 import DonationForm from './components/DonationForm'
 import Link from 'next/link'
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-bg-primary">
+    <div className="flex min-h-screen flex-col">
       <GlassHeader />
-      <HeaderBanner />
-      
-      <main className="container mx-auto px-4 md:px-6 lg:px-8 py-12 md:py-16">
+      <div className="flex flex-1 flex-col surface-over-shader">
+        <HeaderBanner />
+
+        <main className="container mx-auto px-4 md:px-6 lg:px-8 py-12 md:py-16">
         {/* Prayer Times Widget */}
         <section id="prayer-times" className="mb-12 md:mb-16 w-full">
           <PrayerTimesWidget />
@@ -36,7 +38,7 @@ export default function Home() {
             </div>
 
             {/* Charity Registration */}
-            <div className="mt-8 glass-card-premium rounded-2xl p-6 premium-shadow-lg hover-lift border-l-4 border-primary">
+            <div className="mt-8 glass-card-premium rounded-2xl p-6 border-l-4 border-primary">
               <div className="flex items-center gap-3 mb-3">
                 <svg className="w-6 h-6 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -56,7 +58,7 @@ export default function Home() {
             </div>
 
             {/* Bank Transfer Option */}
-            <div className="mt-6 glass-card-premium rounded-2xl p-8 premium-shadow-lg hover-lift">
+            <div className="mt-6 glass-card-premium rounded-2xl p-8">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-xl font-bold text-text-primary">Bank Transfer</h3>
                 <Link 
@@ -93,13 +95,15 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-border bg-bg-secondary py-8">
-        <div className="container mx-auto px-4 md:px-6 lg:px-8">
-          <p className="text-center text-text-secondary">
-            © {new Date().getFullYear()} Jamia Masjid West Drayton. All rights reserved.
-          </p>
-        </div>
-      </footer>
+      <footer className="glass-footer py-8">
+          <div className="container mx-auto flex flex-col gap-3 px-4 md:px-6 lg:px-8">
+            <p className="text-center text-text-secondary">
+              © {new Date().getFullYear()} Jamia Masjid West Drayton. All rights reserved.
+            </p>
+            <PoweredByStratix />
+          </div>
+        </footer>
+      </div>
     </div>
   )
 }
